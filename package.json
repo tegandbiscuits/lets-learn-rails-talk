@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "parcel": "^2.8.3",
+    "reveal.js": "^4.4.0"
+  }
+}
