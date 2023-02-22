@@ -75,20 +75,18 @@ Note:
 * The community is large and active.
 * RailsConf and RubyConf are both large conventions to meet Rails/Ruby devs.
 * The community is a very nice and accepting of all people.
-* There's a concept of "Matz  [the creator of ruby] is nice and so we are nice."
+* There's a concept of "Matz [the creator of ruby] is nice and so we are nice."
 
 ---
 
 # Let's Build Something
 
-A todo app <!-- .element: class="fragment" -->
 
-<!-- TODO: Ensure this is all done -->
+## A Todo App
 
-* Task groups <!-- .element: class="fragment" -->
-* Logins + basic user management <!-- .element: class="fragment" -->
-* Permissioning <!-- .element: class="fragment" -->
+* Tasks that belong to task groups <!-- .element: class="fragment" -->
 * Tests <!-- .element: class="fragment" -->
+* Seeds <!-- .element: class="fragment" -->
 * (MPA with ERB for ease of demonstration) <!-- .element: class="fragment" -->
 
 Note:
@@ -107,9 +105,9 @@ Note:
 
 ## Packages
 
-Packages are called gems.
-They can be declared in a `Gemfile`.
-Gemfiles are interacted with using a tool called Bundler.
+* Packages are called gems.
+* They can be declared in a `Gemfile`.
+* Gemfiles are interacted with using a tool called Bundler.
 
 ---
 
@@ -173,7 +171,7 @@ do_something("foo", option_a: "meow", option_b: "woof")
 Note:
 * A hash is Ruby speak for an object in JavaScript.
 
-<!-- should there be something for keyword arguments? -->
+<!-- TODO: should there be something for keyword arguments? -->
 
 ---
 
@@ -183,14 +181,14 @@ _but still have contexts they are scoped to_
 
 ```rb
 class Foo
-	puts "hello world"
+  puts "hello world"
 end
 #"hello world"
 #=> nil
 ```
 
 Note:
-* Functions and mthods can be ran nearly everywhere.
+* Functions and methods can be ran nearly everywhere.
 * They are still scoped to contexts, but the contexts they can be used in are pretty broad
 * In this case, declaring the class `Foo` will log `"hello world"`.
   * This only happens when this code is evaluated, not every time an instance of `Foo` is created (so typically once).
@@ -247,7 +245,9 @@ Note:
 
 ---
 
-## Create The Project
+# Create The Project
+
+---
 
 ```sh
 rails new planner --database postgresql
@@ -339,7 +339,6 @@ Note:
 * The first thing we're going to do is create the model for task groups.
 * The model is going to be pretty simple right now, we're only going to have a name.
 
----
 
 ```sh [|1|2|3]
 rails generate model TaskGroup \
@@ -347,7 +346,7 @@ rails generate model TaskGroup \
   --skip-fixture
 ```
 
-<!-- show what this generates -->
+<!-- TODO: show what this generates -->
 
 Note:
 * Rails is handy and comes with a bunch of generators to spit out boilerplate code.
@@ -373,10 +372,12 @@ Note:
 
 ---
 
-## Requiring Title in the DB
+## Requiring Title in the Database
+
 
 ```rb [|5]
 # migration file
+
 class CreateTaskGroups < ActiveRecord::Migration[7.0]
   def change
     create_table :task_groups do |t|
@@ -398,7 +399,10 @@ Note:
 
 ## Requiring Title in the Ruby Class
 
-```rb [|2]
+
+```rb [|4]
+# app/models/task_group.rb
+
 class TaskGroup < ApplicationRecord
   validates :name, presence: true
 end
@@ -440,7 +444,10 @@ Note:
 
 ## Testing Task Group Model
 
-```rb [|4-7|8-10|12-16]
+
+```rb [|6-9|10-12|14-18]
+# test/models/task_group_test.rb
+
 require "test_helper"
 
 class TaskGroupTest < ActiveSupport::TestCase
@@ -477,8 +484,9 @@ Note:
 
 ```sh
 rails test
-# show output
 ```
+
+<!-- TODO: show output -->
 
 Note:
 * You can run these with `rails test`.
@@ -486,12 +494,13 @@ Note:
 
 ---
 
-## Making Things Pretty
+# Making Things Pretty
 
-```html
+
+```erb
 <!-- app/views/layouts/application.html.erb (inside `head` element) -->
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" >
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 ```
 
@@ -507,6 +516,7 @@ Note:
 ---
 
 ## Notice Container
+
 
 ```erb
 <!-- app/views/layouts/application.html.erb (inside `body` element) -->
@@ -529,14 +539,14 @@ Note:
 
 ---
 
-# Creating a Controller
+# Creating a Controller <!-- .element: class="r-fit-text" -->
 
 Note:
 * We've got this model, but now we need to actually do something with it.
 * That will be the controller's job.
 * We could use a generator, but to we're going to do this manually to explain things along the way
 
-<!-- should I give a sentance for what a controller is? -->
+<!-- TODO: should I give a sentence for what a controller is? -->
 
 
 ```rb
@@ -558,6 +568,7 @@ Note:
 ---
 
 ## Scaffolding Controller Methods
+
 
 ```rb [|10-12|22|24|4]
 # app/controllers/task_groups_controller.rb
@@ -613,9 +624,10 @@ Note:
 
 ---
 
-## Adding the route
+## Adding the Route
 
-```rb [|4]
+
+```rb [|4|]
 # config/routes.rb
 
 Rails.application.routes.draw do
@@ -628,6 +640,7 @@ root "task_groups#index"
 ```
 <!-- .element: class="fragment" -->
 
+Note:
 * Now we gotta make the endpoints accessible
 * Do that in the `routes.rb` file
 * An add this `resource` call with the symbol `:task_groups`
@@ -642,9 +655,12 @@ root "task_groups#index"
 
 ---
 
-## Setting the task group
+## Setting the Task Group
+
 
 ```rb
+# app/controllers/tasks_controller.rb
+
 def set_task_group
   @task_group = if params[:id]
                   TaskGroup.find(params[:id])
@@ -670,7 +686,10 @@ Note:
 
 ## Task Group Params
 
+
 ```rb
+# app/controllers/tasks_controller.rb
+
 def task_group_params
   params.require(:task_group).permit(:title)
 end
@@ -686,7 +705,10 @@ Note:
 
 ## Index Action
 
+
 ```rb
+# app/controllers/tasks_controller.rb
+
 def index
   @task_groups = TaskGroup.all
 end
@@ -700,9 +722,7 @@ Note:
 * If we wanted to, we could go more advanced than `all` and add pagination, or query params for filters, but that's not relevant at this time
 
 
-### Index Action View
-
-```html
+```erb
 <!-- app/views/task_groups/index.html.erb -->
 
 <div class="d-flex justify-content-between align-items-center">
@@ -726,7 +746,10 @@ Note:
 
 ## Create Action
 
+
 ```rb
+# app/controllers/task_groups_controller.rb
+
 def new; end
 
 def create
@@ -743,9 +766,7 @@ Note:
 * We run save which will return true or false (running `save!` will raise an error), and either go back to the index page, or stay on the form if it's invalid
 
 
-### New Action View
-
-```html
+```erb
 <!-- app/views/task_groups/new.html.erb -->
 
 <h1>New task group</h1>
@@ -762,9 +783,7 @@ Note:
 * We're going to have a partial for the task group form so it can be shared between the `new` and `edit` pages
 
 
-### Form Partial
-
-```html
+```erb
 <!-- app/views/task_groups/_form.html.erb -->
 
 <%= form_with(model: task_group) do |form| %>
@@ -787,6 +806,7 @@ Note:
 <% end %>
 ```
 
+Note:
 * Notice that the file name starts with an underscore, this is to signify it's a partial.
 * Form helpers aren't necessary, but they save you a lot of typing
 * All that really matters is your inputs have the correct name
@@ -795,16 +815,16 @@ Note:
 
 ## Show Action
 
+
 ```rb
+# app/controllers/task_groups_controller.rb
+
 def show; end
 ```
 
 Note:
 * The show action is already done for us since we have `set_task_group`
 
-### Show Action View
-
-<!-- need a back button -->
 
 ```html
 <!-- app/views/task_groups/show.html.erb -->
@@ -824,7 +844,10 @@ Note:
 
 ## Update Action
 
+
 ```rb
+# app/controllers/task_groups_controller.rb
+
 def edit; end
 
 def update
@@ -842,8 +865,6 @@ Note:
 
 * Also pretty similar to the `create` action, we're just running `update` with our sanitized params, and responding based on that outcome
 
-
-### Edit Action View
 
 ```html
 <!-- app/view/task_groups/edit.html.erb -->
@@ -864,9 +885,10 @@ Note:
 
 ## Delete Action
 
-Now for deleting task groups.
 
 ```rb
+# app/controllers/task_groups_controller.rb
+
 def destroy
   @task_group.destroy!
   redirect_to task_groups_url, notice: "Task group was successfully destroyed."
@@ -874,13 +896,12 @@ end
 ```
 
 Note:
+* Now for deleting task groups.
 * We're going to run `destroy` with a `!` at the end so instead of `true`/`false` it raises an error if it fails
 * After it runs, we'll take the user back to the task groups index page
 
 
-### Delete Action UI
-
-```html
+```erb
 <!-- app/views/task_groups/edit.html.erb (next to cancel button) -->
 
 <%= button_to(
@@ -902,8 +923,7 @@ Note:
 
 ## Trying things out
 
-<!-- get a video -->
-<!-- Show that blank names return an error -->
+<!-- TODO: get a video (show that blank names return an error) -->
 
 Note:
 * Alright, now that we have that code in place, let's see it in action.
@@ -913,6 +933,7 @@ Note:
 ---
 
 ## Controller Tests
+
 
 ```rb
 # test/controllers/task_groups_controller_test.rb
@@ -982,7 +1003,10 @@ Note:
 * Then on create, we can really easily test that sending a `POST` request to the task groups endpoint actually causes a new one to be created
 * The same applies to all the other resources
 
+---
+
 ## System Tests
+
 
 ```rb
 # test/system/task_groups_test.rb
@@ -1050,7 +1074,9 @@ Note:
 * They also tend to be a little more flakey
 * Mainly want to use these tests for user flows as they should be or critical edge cases, and push off the other stuff to integration tests
 
-<!-- mention binding.irb for debugging browser tests? -->
+<!-- TODO: mention binding.irb for debugging browser tests? -->
+
+---
 
 ### Running System Tests
 
@@ -1060,7 +1086,7 @@ rails test:system
 rails test path/to/test.rb
 ```
 
-<!-- drop in a video of them running -->
+<!-- TODO: drop in a video of them running -->
 
 Note:
 * You don't need to already have the Rails server running for this
@@ -1069,7 +1095,7 @@ Note:
 
 ---
 
-## Generate Task Resource
+# Generate Task Resource
 
 Note:
 * Alright, let's create the actual task resource
@@ -1085,7 +1111,7 @@ rails g model Task \
   --no-fixture
 ```
 
-<!-- should I use task item instead? -->
+<!-- TODO: should I use task item instead? -->
 
 Note:
 * We're going to have some more fields for tasks
@@ -1094,12 +1120,17 @@ Note:
 
 ---
 
-## Migration Update
+## Create Task Migration Updates
+
 
 ```rb
+# create task migration
+
 t.string :title, null: false
 t.boolean :completed, null: false, default: false
 ```
+
+<!-- TODO: make this snippet be the whole class -->
 
 ```sh
 rails db:migrate
@@ -1111,7 +1142,8 @@ Note:
 
 ---
 
-## Task validation
+## Task Model Validation
+
 
 ```rb
 # app/models/task.rb
@@ -1134,6 +1166,7 @@ Note:
 
 ## Add Relation to Task Group
 
+
 ```rb
 # app/models/task_group.rb
 
@@ -1152,6 +1185,7 @@ Note:
 ---
 
 ## Test Task Model
+
 
 ```rb
 # test/models/task_test.rb
@@ -1182,9 +1216,12 @@ Note:
 
 ---
 
-## Creating Tasks Controller
+# Creating Tasks Controller <!-- .element: class="r-fit-text" -->
+
 
 ```rb
+# app/controllers/tasks_controller.rb
+
 class TasksController < ApplicationController
   before_action :set_task_group
   before_action :set_task
@@ -1232,8 +1269,6 @@ class TasksController < ApplicationController
 end
 ```
 
-<!-- TODO: cut down empty methods in task groups controller -->
-
 Note:
 * This is nearly the same as the tasks group controller, so I'm going to move faster here
 * The main thing you'll notice is we're not going to have actions for show or index
@@ -1246,13 +1281,16 @@ Note:
 
 ## Task Controller Routing
 
+
 ```rb
+# config/routes.rb
+
 resources :task_groups do
   resources :tasks, except: %i[index show]
 end
 ```
 
-```
+```text
 /task_groups/:task_group_id/tasks
 /task_groups/:task_group_id/tasks/:id
 ```
@@ -1269,9 +1307,10 @@ Note:
 
 ---
 
-## New Task Link
+## Change Show Task Group View
 
-```html
+
+```erb
 <!-- app/views/task_groups/show.html.erb -->
 
 <div class="mt-5">
@@ -1288,7 +1327,8 @@ Note:
 
 ## New Task Form
 
-```html
+
+```erb
 <!-- app/views/tasks/new.html.erb -->
 
 <h1>New task</h1>
@@ -1300,7 +1340,10 @@ Note:
 </div>
 ```
 
-```html
+
+```erb
+<!-- app/views/tasks/_form.html.erb -->
+
 <%= form_with(model: [task_group, task]) do |form| %>
   <% if task.errors.any? %>
     <% task.errors.each do |error| %>
@@ -1336,10 +1379,11 @@ Note:
 
 ---
 
-## Showing Tasks
+## Showing Tasks in Task Group View
 
-```html
-<!-- app/views/show.html.erb -->
+
+```erb
+<!-- app/views/task_groups/show.html.erb -->
 
 <div class="mt-5">
   <div class="mb-3">
@@ -1358,12 +1402,9 @@ Note:
 
 * This is a pretty slick thing Rails can do, by passing a collection of tasks, it will automatically find a partial for a single task
 
----
 
-## Single Task Partial
-
-```html
-<!-- app/views/_task.html.erb -->
+```erb
+<!-- app/views/tasks/_task.html.erb -->
 
 <%= tag.div(
   class: class_names(
@@ -1372,9 +1413,8 @@ Note:
   )
 ) do %>
   <div>
-    <h2>
-      <%= task.title %>
-    </h2>
+    <h2><%= task.title %></h2>
+
     <% if task.due_at %>
       <p class="text-muted"><%= task.due_at %></p>
     <% end %>
@@ -1429,7 +1469,10 @@ Note:
 
 ## Edit Task Page
 
-```html
+
+```erb
+<!-- app/views/tasks/edit.html.erb -->
+
 <h1>Editing task</h1>
 
 <%= render "form", task_group: @task_group, task: @task %>
@@ -1453,9 +1496,12 @@ Note:
 
 ---
 
-## Tasks Controller Tests
+## Testing the Tasks Controller
+
 
 ```rb
+# tests/controllers/tasks_controller_test.rb
+
 require "test_helper"
 
 class TasksControllerTest < ActionDispatch::IntegrationTest
@@ -1514,9 +1560,12 @@ Note:
 
 ---
 
-## Tasks E2E Tests
+## Tasks System Tests
+
 
 ```rb
+# tests/system/tasks_test.rb
+
 require "application_system_test_case"
 
 class TasksTest < ApplicationSystemTestCase
@@ -1606,12 +1655,12 @@ Note:
 
 ---
 
-## Model Scopes
+# Model Scopes
 
 Note:
 * One of the cool things about ActiveRecord is it's composibility
 * It doesn't actually do a query until you output a value or turn it into an array
-* This makes it so you can just keep on chaining clauses and stuff to a model, and it will build a query that is effecient and removes any redundancies it knows about
+* This makes it so you can just keep on chaining clauses and stuff to a model, and it will build a query that is efficient and removes any redundancies it knows about
 * It also lets you create what Rails calls "scopes" to abstract specific queries
 * These are essentially class methods that you can add to model queries
 
@@ -1619,10 +1668,11 @@ Note:
 
 ## Complete and Incomplete Scopes
 
+
 ```rb
 # app/models/task.rb
 
-class Task < ApplicationRecoord
+class Task < ApplicationRecord
   # ...
 
   scope :completed, -> { where(completed: true) }
@@ -1643,16 +1693,19 @@ Note:
 
 ## Using Our Scope
 
-```html
+
+```erb
 <!-- app/views/task_groups/index.html.erb -->
 
 <div class="list-group mt-5">
   <% @task_groups.each do |task_group| %>
     <%= link_to task_group, class: "list-group-item list-group-item-action" do %>
       <%= task_group.title %>
+
       <span class="badge bg-warning rounded-pill">
         <%= task_group.tasks.incomplete.count %> incomplete
       </span>
+
       <span class="badge bg-success rounded-pill">
         <%= task_group.tasks.completed.count %> complete
       </span>
@@ -1668,7 +1721,7 @@ Note:
 
 ---
 
-## Seeds
+# Seeds
 
 Note:
 * Seeds are pretty cool
@@ -1680,6 +1733,7 @@ Note:
 
 ## Adding Seeds
 
+
 ```rb
 # db/seeds.rb
 
@@ -1689,7 +1743,6 @@ Note:
   6.times do |task_number|
     due_date = task_number.even? ? task_number.months.from_now : nil
     completed = (task_number % 3).zero?
- 
 
     task_group.tasks.create!(
       title: "Task #{task_group_number}x#{task_number}",
@@ -1698,8 +1751,8 @@ Note:
     )
   end
 end
-
 ```
+
 
 ```sh
 rails db:seed
@@ -1725,16 +1778,18 @@ Note:
 
 ---
 
-## FactoryBot
+## Factory Bot
 
 Note:
 * One last thing I want to show is a package called FactoryBot
 * It's a different approach to creating data in your tests than factories
 * Similar to what we were doing by creating records as needed, but does so in a more resuable, and sustainable way
+* This might be getting a bit advanced for the end of a talk with a lot of information thrown at you, but bear with me, we've almost made it to the end
 
 ---
 
 ## Install FactoryBot
+
 
 ```rb
 group :development, :test do
@@ -1743,9 +1798,11 @@ group :development, :test do
 end
 ```
 
+
 ```sh
 bundle install
 ```
+
 
 ```rb
 # test/test_helper.rb
@@ -1767,6 +1824,7 @@ Note:
 
 ## Create Factories
 
+
 ```rb
 # test/factories/task.rb
 
@@ -1777,6 +1835,7 @@ FactoryBot.define do
   end
 end
 ```
+
 
 ```rb
 # test/factories/task_groups.rb
@@ -1813,50 +1872,16 @@ Note:
 
 ## Use the Factories
 
-```rb
-# test/controllers/task_groups_controller_test.rb
 
+<!-- TODO: get pre change for what these are -->
+
+```rb
 setup do
   @task_group = create(:task_group)
 end
 ```
 
 ```rb
-# test/controllers/tasks_controller_test.rb
-
-setup do
-  @task = create(:task)
-  @task_group = @task.task_group
-end
-```
-
-```rb
-# test/models/task_group_test.rb
-
-setup do
-  @task_group = build(:task_group)
-end
-```
-
-```rb
-# test/models/task_test.rb
-
-setup do
-  @task = build(:task)
-end
-```
-
-```rb
-# test/system/task_groups_test.rb
-
-setup do
-  @task_group = create(:task_group)
-end
-```
-
-```rb
-# test/system/tasks_test.rb
-
 setup do
   @task = create(:task)
   @task_group = @task.task_group
@@ -1872,6 +1897,73 @@ Note:
 
 ---
 
+# We made it
+
+<!-- TODO: get demo video of the whole thing -->
+<!-- TODO: get lines of code added and removed since init -->
+
+---
+
+# Authorization and Authentication <!-- .element: class="r-fit-text" -->
+
+---
+
+## Devise
+
+Note:
+* Can be used for API stuff
+* Can do OAuth integration
+* Can get current user
+* Get a bunch of pre-made user management stuff
+
+---
+
+## Pundit
+
+---
+
+## Example of a Pundit Policy
+
+---
+
+# Next Steps
+
+---
+
+## Where to Deploy
+
+Note:
+* SMTP server
+* Automate running migrations
+
+---
+
+## Links to Keep Learning
+
+---
+
+## Namedropping Packages
+
+* Grape for APIs
+* Strong migrations
+* Linters
+* Overmind
+* Strong migrations
+* RSpec
+* Kaminari
+* Rubymine
+* Pry (and the console)
+* Mailhog
+* Bullet
+
+---
+
+# Thank You!
+
+<!-- TODO: link to code -->
+<!-- TODO: link to long form article article -->
+
+<!--
 ## Get Some Users
 
 First thing we're going to want is some users.
@@ -1892,8 +1984,6 @@ This will create a couple files, and give you some instructions to follow.
 * Authorize a home page
 * Have an index page that returns all for any user
 
----
-
 ## Test Authentication
 
 * Add factorybot
@@ -1902,8 +1992,6 @@ This will create a couple files, and give you some instructions to follow.
 * Controller test for authentication required
 * Setting up mailhog
 
----
-
 ## Setting up pundit
 
 * Add gem
@@ -1911,8 +1999,6 @@ This will create a couple files, and give you some instructions to follow.
 * Implement authentication and scope
 * Test for requiring authentication on controller
 * Tests for pundit code
-
----
 
 ## Cool things that are easy
 
@@ -1926,54 +2012,15 @@ This will create a couple files, and give you some instructions to follow.
 * Mailers for upcoming tasks that are due
 * Zhoosh it up to be more SPA like with Turbo
 
----
-
-## We made it
-
-* LOC +/- since init
-
----
-
-## Deploying
-
-* Host the thing
-* SMTP server
-* Automate running migrations
-* Just high level explain
-
----
-
-## Namedropping
-
-* Grape for APIs
-* Strong migrations
-* Linters
-* Overmind
-* Strong migrations
-* RSpec
-* Kaminari
-* Rubymine
-* Pry (and the console)
-* Mailhog
-* Bullet
-
----
-
-## End
-
-* Where to find code
-* Presentation in word form
-
----
-
-* Implement the app
-	* Going to gloss over showing
-		* Styling
-		* Testing beyond the task board model
-		* Some installations
-
+-->
 
 <!-- TODO: add rubocop to make sure not doing anything bad apart from frozen_string_literal missing -->
 <!-- TODO: ensure only vertical slides have ### heading -->
 <!-- TODO: ensure all TODO items are resolved -->
 <!-- TODO: who am I slide? -->
+<!-- TODO: ensure all code blocks have line numbers -->
+<!-- TODO: need a back button from single group to all groups -->
+<!-- TODO: test removing empty methods in task groups controller and revise if they're not needed -->
+<!-- TODO: ensure all html blocks are actually erb>
+<!-- TODO: ensure tests follow "Testing the (resource) (type)" pattern "Testing the Task Groups Controller" or "(resource) System Tests" -->
+<!-- TODO: ensure all comments are resolved or todo -->
