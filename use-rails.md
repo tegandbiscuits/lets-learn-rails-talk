@@ -1,104 +1,146 @@
-<!-- * Intro
-  * Long form article exists which will be more accessible
-* Audience
-  * Devs who want to build a backend for something, but don't want to live in that world
-  * People who don't want to spend a lot of time on decision making / establishing patterns
-    * People who want to hit the ground running -->
+# Let's Learn Rails
+
+Note:
+* Hi everyone, I'm Tegan
+* Today I'm going to talk about the backend framework Ruby on Rails
+* I'll be going over at a high level, why I think you should use it
+* Also going to build a simple web app to demonstrate it a bit
+
+---
 
 # You Should Use Rails
 
 Note:
-* There's an idea that Rails is a dying framework.
-* It's less hot than it used to be, but it is very much alive, and is still a very useful framework and ecosystem.
-* Both for MPA and API based stuff.
+* Rails is a powerful framework that lets you easily build complex web apps in a fast, yet sustainable way
+* It's very big on the idea that you shouldn't need to bother thinking about the things that every web app does
+  * So you can focus on what makes your product actually unique
+* You can use it to build
+  * Traditional multipage apps
+  * APIs
+  * Even microservices to an extent (though it uses a monolithic architecture so this isn't the best application for it)
 
 ---
 
 ## Loads Out of the Box
 
+* Testing
+* Database Interaction and Management
+* Sending & Receiving Transactional Emails
+* WebSockets
+* Background Jobs
+
 Note:
-* Rails can do a lot of things right out of the box.
-<!-- TODO: need to list things -->
+* Like I said, Rails gives you a lot right out of the box
+* This isn't an exhaustive list, but here are some of the things I think are pretty powerful or significant
 
 ---
 
 ## All The Patterns
 
 Note:
-* Convention over code philosophy driven so you don't need to think about stuff that's not unique to you, and a lot of patterns are baked in.
-* But also doesn't restrict you if you need to break convention.
-* Also makes it easier to keep codebase organized and reason about, which helps as it or your team grows.
-* Easy to return to an old codebase, or for a new person to get up to speed.
+* As well as the actual code do to things, you get a load of patterns and conventions given to you
+* You don't need to answer architecture questions that have been asked by most other developers, because Rails basically holds your hand while telling you what to do
+* The philosophy behind it is "convention over code"
+  * Whenever things can conform to convention you need to write very little code
+  * Your able to break that convention if you need to
+  * These conventions are also how Rails does a lot of its magic (technical term)
+* Apart from helping you move fast and avoid reinventing the wheel, this also helps other developers or you in the future get onboarded to a codebase, and helps keep multiple developers from stepping on each other's toes
 
 ---
 
-## Great Tooling
+## Great Third Party Tooling
 
 Note:
-* Tooling is matured, so things are battle tested, and it's easy to find off the shelf libraries.
-* Has a very big testing focus in the community.
-* It's also easy to debug code.
-* Partly because Ruby is an easy language to test.
+* Simply due to the age of the ecosystem, a lot of popular packages are mature and battle tested
+  * A fair bit are even maintained by big companies, like Shopify, GitHub, or ThoughBot
+* You can find a lot of powerful tools that can be integrated really easily
+* Partly due to how Ruby works, it's super easy to distribute libraries that do all sorts of things
+  * Can be a small thing like a gem to validate phone numbers
+  * More complex like user management
+  * All the way to gems that let you rapidly create a fully customizable ecommerce site in basically a day
+* The community also has a really big testing focus, so nearly everything is testable in a confident way
+* Also due to how Ruby works, things are really easy to debug
+  * You can jump into a REPL at pretty much any point in your code and poke around
+  * It's easy to modify other people's code if you want to contribute to open source
 
 ---
 
 ## Hit The Ground Running
 
 Note:
-* Because of these, you can keep from reinventing the wheel a lot.
-* Both in libraries, and with how Ruby works, also in your own code (metaprogramming).
-* Easy to hit the ground running, and deliver things fast.
+* So to reiterate, because you get so many patterns and tools out of the box, you can really hit the ground running, and keep from reinventing the wheel a lot, which in turn helps you deliver things fast
+
+* In the same vein of not reinventing the wheel, because of how Ruby works, you can do loads of abstractions to keep your own code from repeating itself
 
 ---
 
 ## Useful For Many
 
 Note:
-* Pretty much any team or project size can benefit from these
-* Move fast, keep code DRY, easy to not step on toes
-* It's also easy to pick up, so if you're an app or frontend dev working on something that needs an API, you can go pretty far before needing a dedicated backend person (though I wouldn't recommend that for important things)
-* Big users include Shopify and Github
+* Rails is a very versatile and powerful framework
+* It's almost suspiciously easy to use
+* So can be useful for a solo developer with not that much backend experience, all the way to large enterprise products
+* Rails is also structured in a way, that makes it really easy to avoid stepping on each other's toes as more developers get on a codebase
+* As more people get on to the codebase, it's really easy to keep them from stepping 
+* Large companies that use Rails
+  * Github
+  * Shopify
+  <!-- TODO: get one or two more -->
+* Speaking of beginner codebases done in Rails, I will also add that it's a lot easier to find someone who'll be happy maintaining a bad Rails app than a bad Node backend
 
 ---
 
 ## Ruby Is Great
 
 Note:
-* Ruby is also a really fun language to work with, so that in itself is a benefit.
-* It was literally made to make developers happy.
+* Going into more subjective territory, I also feel that Ruby in it's own right is a pro to using Rails
+* It's a really fun language to work with
+* It was literally made to make developers happy
+* It's easy to write powerful code in a way that's really expressive
 
 ---
 
 ## The Community is Fantastic
 
 Note:
-* The community is large and active.
-* RailsConf and RubyConf are both large conventions to meet Rails/Ruby devs.
-* The community is a very nice and accepting of all people.
+* The Rails community is still very large and active
+* If you want to feel connected
+  * RailsConf and RubyConf are two large conferences that happen yearly
+  * Many other smaller user groups around
+
+* The Ruby community more broadly, is incredibly nice and accepting of people
+* Both in person, and also if you want to get into open source stuff in the ecosystem
 * There's a concept of "Matz [the creator of ruby] is nice and so we are nice."
 
 ---
 
 # Let's Build Something
 
+Note:
+* Alright, let's build something
+* Hopefully I've enticed you enough that you're curious to see some of this stuff in action
+* So let's make...
+
+---
 
 ## A Todo App
 
 * Tasks that belong to task groups <!-- .element: class="fragment" -->
 * Tests <!-- .element: class="fragment" -->
-* Seeds <!-- .element: class="fragment" -->
+* Data seeding <!-- .element: class="fragment" -->
 * (MPA with ERB for ease of demonstration) <!-- .element: class="fragment" -->
 
 Note:
-* Maybe (hopefully) you're a bit interested in Rails, so now I'm going to demonstrate some of the things reasons to use it by walking through building a web app.
+* The UI and UX could be a lot slicker
+* For the sake of simplicity and time, this might look a little rough
 
 ---
 
 # Ruby Primer
 
 Note:
-* If you're looking at Rails for the first time, there's a pretty good chance you're not super familiar with Ruby.
-* It's fairly intuitive by reading it, but here's a few things that are worth pointing out.
+* If you're looking at Rails for the first time, there's a pretty good chance you're not super familiar with Ruby
+* It's fairly intuitive by reading it, but here's a few things that are worth pointing out
 <!-- * Ruby is used for things outside of rails, but ruby developers and at (at some point) rails developers is a pretty big overlap. -->
 
 ---
@@ -114,7 +156,7 @@ Note:
 ## Some Things Can Be Implied/Omitted
 
 Note:
-* A big thing is that might throw off someone is the amount of syntax that can be implied.
+* A big thing is that might throw someone off, is the amount of syntax that can be implied
 
 
 ### Return Statements
@@ -130,6 +172,9 @@ def greet
   "hello world"
 end
 ```
+
+Note:
+* The return keyword at the end of functions
 
 
 ### Parenthesis
@@ -149,9 +194,11 @@ greet "friends"
 ```
 
 Note:
-* Parenthesis are optional
-* Can be confusing (so don't do this) if multiple functions on one line take arguments
-  * Not clear which argument belongs to which function
+* Also parenthesis aren't needed when you declare a function with no parameters
+* Similarly, when you run function you don't need to use parens
+
+* People know this is confusing
+* Usually you will only see parenthesis being omitted when you're running just a single function with arguments
 
 
 ### Curly Braces For Hashs
@@ -169,9 +216,9 @@ do_something("foo", option_a: "meow", option_b: "woof")
 ```
 
 Note:
-* A hash is Ruby speak for an object in JavaScript.
-
-<!-- TODO: should there be something for keyword arguments? -->
+* The curly braces around hashes are also (sometimes) optional
+* For context, a hash in Ruby is equivalent to a generic object in JavaScript
+* This only applies to when you're passing a hash as an argument to a function, and it's the last argument of it
 
 ---
 
@@ -188,11 +235,14 @@ end
 ```
 
 Note:
-* Functions and methods can be ran nearly everywhere.
-* They are still scoped to contexts, but the contexts they can be used in are pretty broad
-* In this case, declaring the class `Foo` will log `"hello world"`.
-  * This only happens when this code is evaluated, not every time an instance of `Foo` is created (so typically once).
-* You'll see this a lot when including a module that adds behavior to a class
+* Functions and methods can be ran nearly everywhere
+  * Provided they exist in the scope of that context
+
+* In this example, we have a `puts` statement being ran at the class level
+* So when this code is evaluated, it will log `"hello world"`
+  * To reiterate, this will generally only happen once, not for every instance of `Foo`
+
+* You'll typically see this pattern being used as a way to configure modules for classes, or for metaprogramming
 
 ---
 
@@ -217,15 +267,20 @@ speak(:loud)
 ```
 
 Note:
-* A symbol is basically a word that has a colon in front of it that can be passed around as a value.
-* It's like a spicy string
-* Typically, these are not visible to an end user
-  * Example: a user inputs a string instead of a symbol
-  * Though what an end user sees/inputs can be transformed from/to a symbol.
-* Symbols are useful for when you want to signify that an argument more specific than an arbitrary string
-* The main technical difference is that every use of a specific symbol occupies the same place in memory
-  * Creating a load of symbols `:loud` will use less memory than creating a bunch of strings `"loud"`
-  * This has never been useful knowledge
+* Lastly, symbols
+* Symbols aren't unique to Ruby, but they're not very common in other languages
+
+* Symbols are like string that sit between variables and constants
+* Typically end users don't see or interact with symbols
+  * However a symbol can be made from or turned into a string
+* They're generally used in places where you have a set amount of values for something
+  * And by extension, can also convey something isn't an arbitrary value better than a string does
+
+* So in this example, we're saying argument `tone` isn't just a random string, it does something special when the value `:loud`
+
+* The main, if not only, technical difference is that symbols that are the same value, regardless of context, all use the same object in memory
+  * So they are a bit more performant and lightweight
+* In practice, this knowledge has never been useful to me
 
 ---
 
@@ -235,50 +290,60 @@ Note:
 * Rails CLI (`gem install rails`)
 
 Note:
-* You need Ruby on your system.
-  * Strongly recommend either `rbenv` or `rvm`.
-* Once you have those installed, select a version of Ruby to use.
-* I'm going to use Ruby 3.
+* Ok, let's actually get into coding
 
-* Get the Rails CLI by running `gem install rails`.
-* At this time, the current version is Rails 7.0.
+* Obviously, you need Ruby on your system
+  * Strongly recommend either `rbenv` or `rvm`
+* Once you have those installed select a version of Ruby to use
+  * This demo was made with using Ruby 3
+
+* Next you're going to need the Rails CLI, which can be installed by running `gem install rails`
+  * At this time, the current version if Rails is 7.0
 
 ---
 
 # Create The Project
 
----
+Note:
+* Now we can move on to initializing the project
+
 
 ```sh
 rails new planner --database postgresql
 ```
 
-<!-- for some reason stylesheets tried to be pulled in but failed, need to resolve -->
-<!-- for now just deleted application.css and removed the import -->
-
 Note:
-* Now we can generate a rails project.
-* Running `rails new` will create a project, and we're going to name it `planner`
+* This can be done using the `rails new` command
 
-* Then we're going to specify Postgres as the database for ActiveRecord to use.
-* There's a number of options you can use for this, but Postgres is usually the best choice.
-* You can always change it later
-<!-- can you add multiple types of databases at once now? -->
+* Here we're saying the project will be called `planner`
+* And we're going to use Postgres as the database for ActiveRecord to use
+  * There's a number of different databases you can use but Postgres is usually the best choice
+  * You can always change it later
+  <!-- TODO: can you add multiple types of databases at once now? -->
 
-<!--
-* As much as I love Rails, the core Rails team isn't great at having good opinions on JavaScript
-* If you're not going to use JavaScript much then the defaults are fine, or even helpful
-* However larger projects would be better of just using a vanilla Webpack or ESBuild setup
-* So to keep things clear, we're just going to get rid of the asset pipeline and out of the box JS stuff
-* I will point out that not super uncommon for Rails libraries that have a frontend aspect to them to require the asset pipeline
-* However you can always add it in later (the same applies for any `rails new` option)
--->
+* There's also a bunch of different flags you can pass, but I'm not going to get into those just yet
 
-* Now we've ran that it'll create a `planner` directory with a bunch of files and run `bundle install` to install our gems.
+* Running this will
+  * Create a `planner` directory with a bunch of files
+  * Run `bundle install` to install the default gems
 
 ---
 
 ## A Note About JavaScript + Rails
+
+Note:
+* I have a quick aside about JavaScript and Rails that I want to make
+* As much as I love Rails, the core Rails maintainers don't always have the best opinions in regards to frontend development
+
+* The last few major versions of Rails have dramatically changed the default JavaScript setup
+  * So it's a little wild
+* Currently, they're big on using import maps
+  * Which are fine if you aren't going too heavy into JavaScript, but if you want to transpile code or do anything advanced, I'd recommend setting up webpack or esbuild
+* Rails defaults to also include Turbo and Stimulus as a frontend framework
+  * In my opinion, these are pretty slick tools, that do pair well with Rails, however maybe shouldn't be there by default
+
+* That said, to not slam you with information, I'm going to just leave everything as is
+  * And also not really get into frontend code too much
 
 ---
 
@@ -291,28 +356,30 @@ rails db:create # creates planner_development and planner_test
 rails serve
 ```
 
+<!-- TODO: hello world screenshot -->
+
 ```sh
 rails test
 ```
 <!-- .element: class="fragment" -->
 
+<!-- TODO: bare test output screenshot -->
+
 Note:
-* Go to the directory of the project
-* Use `rails db:create` to create the databases for our dev environments
-* Then run `rails serve`
+* Ok, let's get things running
+
+* First, go to the directory of the project
+* Then, we can run `rails db:create` to create the databases for our dev and test environments
+* Lastly, run `rails serve`, and you should be able to go `localhost:3000` and see the hello world screen
   * You'll have to restart sometimes, but generally can just leave this running
-* You should be able to go to `localhost:3000` and see the hello world screen
-<!-- collect a screenshot -->
 
 * You can also run the tests
-* There aren't any tests, but you should at least see there aren't errors
+* There aren't any tests, but you should at least see there aren't errors with your environment
 
----
-
+<!--
 ## Overview of Generated Things
 
 Most code will live in `app` or `test`
-
 
 * `assets`: You can throw things you want in your rails views here
 * `channels`: Channels are essentially controllers for websockets
@@ -323,24 +390,26 @@ Most code will live in `app` or `test`
 * `models`: Code that represents data
 * `views`: Templates that controllers render
 
-Note:
+ote:
 * For mailers to work, they need to be plugged into an SMTP server
   * For local development, Mailhog is a really useful tool
 * Models are usually database backed, but don't need to be
 * Your views can create different output, such as HTML, JSON, even CSVs or plaintext
 * There's a bunch of different templating languages you can use, but the default, ERB, is good and simple
+-->
 
 ---
 
 # Generate Task Group Model
 
 Note:
-* Now we've got some things initialized, let's make some interesting things.
-* The first thing we're going to do is create the model for task groups.
-* The model is going to be pretty simple right now, we're only going to have a name.
+* Now we've got things initialized, let's get to implementing stuff
+
+* The first thing we're going to do is create the model for task groups
+* This model will be pretty simple, basically only have a name attribute
 
 
-```sh [|1|2|3]
+```sh [|1|2|3|]
 rails generate model TaskGroup \
   title:string \
   --skip-fixture
@@ -349,33 +418,36 @@ rails generate model TaskGroup \
 <!-- TODO: show what this generates -->
 
 Note:
-* Rails is handy and comes with a bunch of generators to spit out boilerplate code.
+* Rails is handy and comes with a bunch of generators to spit out boilerplate code
 
-* We want to run the generate task, specifying we want a model we call `TaskGroup`.
+* We can run the model generator, specifying the model to be called `TaskGroup`
 
-* We can also use this syntax of `property:type` to spit out more code for us
-* So here we have one property called `name` that will be a `string`
+* Optionally, we can also use this syntax of `property_name:type` to generate more code for us
+* So here we have one property called `title` that will be a `string`
 * There's a bunch of types you can use
   * However you're a little limited by what database you use
 
-* I also added the flag `--skip-fixture` because we're not going to want fixtures.
-* A fixture is a YAML file that gets thrown into the database during each test to reduce test setup code
-* They're good in theory, but in practice get messy really fast
-* Later on I will be showing a better alternative
-
-* It's worth pointing out that the generators are just for convenience, you don't _need_ to use them.
+* I also added the flag `--skip-fixture` because we don't want to use fixtures
+* Fixtures are basically YAML representation of your database, that get loaded to the test database so you don't need to have as much setup code in your tests
+* In theory this is good, but in practice fixtures are messy and annoying
+  * I'll be showing a better alternative later on
 
 * After running this command a few files will be created.
 * A database migration to create the table
 * The ruby class for the model
 * A test file for the class
 
+* It's also worth pointing out that the generators are just for convenience, you don't _need_ to use them.
+
 ---
 
 ## Requiring Title in the Database
 
+Note:
+* We're going to make a small change to what this generated so that the `title` property is required
 
-```rb [|5]
+
+```rb [|6]
 # migration file
 
 class CreateTaskGroups < ActiveRecord::Migration[7.0]
@@ -390,46 +462,49 @@ end
 ```
 
 Note:
-* There's still a little bit of manual work to do.
-
-* First we're going to open the migration and say the `title` column will be required
-* So the newly created migration file will look like this
+* First we're going to open the migration file, and say the `title` column has a `null: false` constraint
 
 ---
 
 ## Requiring Title in the Ruby Class
+
+Note:
+* Next we're going to do the same thing, but in the Ruby class instead of the database
 
 
 ```rb [|4]
 # app/models/task_group.rb
 
 class TaskGroup < ApplicationRecord
-  validates :name, presence: true
+  validates :title, presence: true
 end
 ```
 
 Note:
-* We're also going to indicate that requirement in the Ruby class
-* We do this by running the `validates` method at the class level, which will make Rails aware that `title` is required
+* In the `TaskGroup` class, we add this line that runs the `validates` method, which will make Rails aware that `title` is required
 
 ---
 
 ## Why Require Twice?
 
-* Rails Validation
-  * Avoids DB requests that will fail
-  * Adds methods to `TaskGroup` instances that are useful
-  * Also checks for empty strings
 * Database Validation
   * Prevents manual updates from not having a name
   * Certain methods in Rails can skip validation
   * Get an idea of requirements just by looking at the data
+* Rails Validation
+  * Avoids DB requests that will fail
+  * Adds methods to `TaskGroup` instances that are useful
+  * Also checks for empty strings
 
 Note:
-* There's a few reasons why we're saying name is required in two places
+* There's a few reasons why we're saying `title` is required in two places
 
-* Some of the methods that validates adds will also make it easier to debug
-* Just jump in a rails console and see see if something is valid and why it's not
+* The database is a stronger enforcer of this requirement
+* It also makes it easy to get an idea of our app just by looking at the data
+
+* However, doing the validation in Rails is more performant, since it can potentially save us a useless database call
+* The Rails validation is also more helpful if a record is invalid
+  * Both for you as a developer and for the end user
 
 ---
 
@@ -438,7 +513,7 @@ rails db:migrate
 ```
 
 Note:
-* With Postgres running, we can now run the migration
+* With Postgres running, we can now do the migration
 
 ---
 
