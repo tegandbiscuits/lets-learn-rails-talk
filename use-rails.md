@@ -2,49 +2,49 @@
 
 Note:
 * Hi everyone, I'm Tegan
-* Today I'm going to talk about the backend framework Ruby on Rails
-* I'll be going over at a high level, why I think you should use it
-* Also going to build a simple web app to demonstrate it a bit
+* I'm a software engineer at CodeClimate
+* And today I'm going to talk y'all about Ruby on Rails
 
 ---
 
 # You Should Use Rails
 
 Note:
-* Rails is a powerful framework that lets you easily build complex web apps in a fast, yet sustainable way
-* It's very big on the idea that you shouldn't need to bother thinking about the things that every web app does
-  * So you can focus on what makes your product actually unique
+* So I think you should use Rails
+* Rails is a really powerful framework that lets you build complex web apps in a fast, yet sustainable way
+* It's pretty big on the idea that you shouldn't need to bother thinking about the things that every web app does
+  * So you can just focus on what makes your product actually unique
 * You can use it to build
   * Traditional multipage apps
   * APIs
-  * Even microservices to an extent (though it uses a monolithic architecture so this isn't the best application for it)
+  * Even microservices to an extent
 
 ---
 
-## Loads Out of the Box
+## Lots of Tooling Out of the Box
 
-* Testing
-* Database Interaction and Management
-* Sending & Receiving Transactional Emails
-* WebSockets
-* Background Jobs
+* Testing <!-- .element: class="fragment" -->
+* Database Interaction and Management <!-- .element: class="fragment" -->
+* Sending & Receiving Transactional Emails <!-- .element: class="fragment" -->
+* WebSockets <!-- .element: class="fragment" -->
+* Background Jobs <!-- .element: class="fragment" -->
 
 Note:
-* Like I said, Rails gives you a lot right out of the box
-* This isn't an exhaustive list, but here are some of the things I think are pretty powerful or significant
+* Rails gives you a lot of tooling right out of the box
+* Not an exhaustive list, but a few things I think that are significant...
 
 ---
 
 ## All The Patterns
 
 Note:
-* As well as the actual code do to things, you get a load of patterns and conventions given to you
-* You don't need to answer architecture questions that have been asked by most other developers, because Rails basically holds your hand while telling you what to do
-* The philosophy behind it is "convention over code"
-  * Whenever things can conform to convention you need to write very little code
-  * Your able to break that convention if you need to
-  * These conventions are also how Rails does a lot of its magic (technical term)
-* Apart from helping you move fast and avoid reinventing the wheel, this also helps other developers or you in the future get onboarded to a codebase, and helps keep multiple developers from stepping on each other's toes
+* Beyond tooling, you also get loads of architecture patterns given to you
+* Rails is big on the idea of convention over code
+* Which is to say, you're able to operate in a pretty high level, and declarative way for a lot of common tasks
+* Yet it's flexible enough that it's easy to break convention when you need to
+* The benefit of this is that your code will be very organized and maintainable, and it's easier to find patterns to help you create your own abstractions
+* Apart from keeping you from reinventing the wheel, it also helps other developers (or you in the future) pick up a codebase
+  * The basic stuff can be assumed knowledge
 
 <!-- conventions are how rails is able to do it's magic -->
 
@@ -53,68 +53,50 @@ Note:
 ## Great Third Party Tooling
 
 Note:
-* Simply due to the age of the ecosystem, a lot of popular packages are mature and battle tested
-  * A fair bit are even maintained by big companies, like Shopify, GitHub, or ThoughBot
-* You can find a lot of powerful tools that can be integrated really easily
-* Partly due to how Ruby works, it's super easy to distribute libraries that do all sorts of things
-  * Can be a small thing like a gem to validate phone numbers
-  * More complex like user management
-  * All the way to gems that let you rapidly create a fully customizable ecommerce site in basically a day
+* Rails is a pretty established framework, which at this point means that a lot of third party packages are also mature and battle tested
+  * A fair bit are even maintained by big companies, like Shopify, GitHub, or ThoughtBot
+* There's a huge range of packages out there in Ruby
+  * Big, complex things like user management with Devise
+  * Or small things like validating phone numbers
 * The community also has a really big testing focus, so nearly everything is testable in a confident way
-* Also due to how Ruby works, things are really easy to debug
-  * You can jump into a REPL at pretty much any point in your code and poke around
-  * It's easy to modify other people's code if you want to contribute to open source
 
 ---
 
 ## Hit The Ground Running
 
 Note:
-* So to reiterate, because you get so many patterns and tools out of the box, you can really hit the ground running, and keep from reinventing the wheel a lot, which in turn helps you deliver things fast
-
-* In the same vein of not reinventing the wheel, because of how Ruby works, you can do loads of abstractions to keep your own code from repeating itself
+* So to reiterate, because you get so many patterns and tooling out of the box, you can really hit the ground running, and prevent answering decisions that have already been answered by other people
+* Which in turn helps you deliver things fast
 
 ---
 
 ## Useful For Many
 
 Note:
-* Rails is a very versatile and powerful framework
-* It's almost suspiciously easy to use
-* So can be useful for a solo developer with not that much backend experience, all the way to large enterprise products
-* Rails is also structured in a way, that makes it really easy to avoid stepping on each other's toes as more developers get on a codebase
-* As more people get on to the codebase, it's really easy to keep them from stepping 
-* Large companies that use Rails
-  * Github
-  * Shopify
-  <!-- TODO: get one or two more -->
-* Speaking of beginner codebases done in Rails, I will also add that it's a lot easier to find someone who'll be happy maintaining a bad Rails app than a bad Node backend
+* For how versatile it is, Rails is almost suspiciously easy to pick up and use
+* So you could be a solo developer that doesn't have much backend experience, all the way up to a large scale company, like GitHub or Shopify
+* Also, Rails is also structured in a way, that I think, makes it easy to avoid stepping on each other's toes as more developers work on a codebase at one time
 
 ---
 
 ## Ruby Is Great
 
 Note:
-* Going into more subjective territory, I also feel that Ruby in it's own right is a pro to using Rails
+* Into more subjective territory, I also feel like Ruby in it's own right is a plus to using Rails
 * It's a really fun language to work with
 * It was literally made to make developers happy
-* It's easy to write powerful code in a way that's really expressive
-
-<!-- in my opinion a framework as expressive as rails is only possible in a language like ruby -->
+* It's easy to write code that does complicated things in a way that's minimal, expressive and clear
 
 ---
 
 ## The Community is Fantastic
 
 Note:
-* The Rails community is still very large and active
-* If you want to feel connected
-  * RailsConf and RubyConf are two large conferences that happen yearly
-  * Many other smaller user groups around
-
-* The Ruby community more broadly, is incredibly nice and accepting of people
-* Both in person, and also if you want to get into open source stuff in the ecosystem
-* There's a concept of "Matz [the creator of ruby] is nice and so we are nice."
+* More broadly, in my experience, the Ruby community itself is incredibly nice and accepting of people
+* There's even an acronym MINASWAN which is "Matz [the creator of ruby] is nice and so we are nice."
+* So I think it's a very positive environment for developers to be in
+* If you want to feel connected, RubyConf and RailsConf are large conferences that happen yearly
+* And there's loads of smaller user groups around
 
 ---
 
@@ -132,7 +114,6 @@ Note:
 * Tasks that belong to task groups <!-- .element: class="fragment" -->
 * Tests <!-- .element: class="fragment" -->
 * Data seeding <!-- .element: class="fragment" -->
-* (MPA with ERB for ease of demonstration) <!-- .element: class="fragment" -->
 
 Note:
 * The UI and UX could be a lot slicker
@@ -144,7 +125,7 @@ Note:
 
 Note:
 * If you're looking at Rails for the first time, there's a pretty good chance you're not super familiar with Ruby
-* It's fairly intuitive by reading it, but here's a few things that are worth pointing out
+* It's fairly intuitive by reading it (assuming you know how to program), but here's a few things that are worth pointing out
 <!-- * Ruby is used for things outside of rails, but ruby developers and at (at some point) rails developers is a pretty big overlap. -->
 
 ---
@@ -165,13 +146,13 @@ Note:
 
 ### Return Statements
 
-```rb
+```rb []
 def greet
   return "hello world"
 end
 ```
 
-```rb
+```rb []
 def greet
   "hello world"
 end
@@ -183,7 +164,7 @@ Note:
 
 ### Parenthesis
 
-```rb
+```rb []
 def greet
   "hello world"
 end
@@ -209,7 +190,7 @@ Note:
 
 _Only when the last argument of a function_
 
-```rb
+```rb []
 def do_something(name, options)
   # ...
 end
@@ -230,7 +211,7 @@ Note:
 
 _but still have contexts they are scoped to_
 
-```rb
+```rb []
 class Foo
   puts "hello world"
 end
@@ -256,7 +237,7 @@ Note:
 :i_am_a_symbol
 ```
 
-```rb
+```rb []
 def speak(tone = nil)
   greeting = "hello world"
   return greeting.upcase if tone == :loud
@@ -277,8 +258,8 @@ Note:
 * Symbols are like string that sit between variables and constants
 * Typically end users don't see or interact with symbols
   * However a symbol can be made from or turned into a string
-* They're generally used in places where you have a set amount of values for something
-  * And by extension, can also convey something isn't an arbitrary value better than a string does
+* Generally they're used as arguments where you have a set amount of values for something
+  * And by extension, also convey something isn't an arbitrary value better than a string does
 
 * So in this example, we're saying argument `tone` isn't just a random string, it does something special when the value `:loud`
 
@@ -298,7 +279,7 @@ Note:
 
 * Obviously, you need Ruby on your system
   * Strongly recommend either `rbenv` or `rvm`
-* Once you have those installed select a version of Ruby to use
+* Once you have one of those installed select a version of Ruby to use
   * This demo was made with using Ruby 3
 
 * Next you're going to need the Rails CLI, which can be installed by running `gem install rails`
@@ -342,12 +323,12 @@ Note:
 * The last few major versions of Rails have dramatically changed the default JavaScript setup
   * So it's a little wild
 * Currently, they're big on using import maps
-  * Which are fine if you aren't going too heavy into JavaScript, but if you want to transpile code or do anything advanced, I'd recommend setting up webpack or esbuild
-* Rails defaults to also include Turbo and Stimulus as a frontend framework
+  * Which is fine if you aren't going too heavy into JavaScript, but if you want to transpile code or do anything advanced, I'd recommend setting up webpack or esbuild
+* Rails also includes the JavaScript packages Turbo and Stimulus by default
   * In my opinion, these are pretty slick tools, that do pair well with Rails, however maybe shouldn't be there by default
 
 * That said, to not slam you with information, I'm going to just leave everything as is
-  * And also not really get into frontend code too much
+* However if you get into more frontend heavy work, you might want to take a second look at the Rails defaults
 
 ---
 
@@ -409,8 +390,8 @@ ote:
 Note:
 * Now we've got things initialized, let's get to implementing stuff
 
-* The first thing we're going to do is create the model for task groups
-* This model will be pretty simple, basically only have a name attribute
+* Tasks will belong to task groups, so lets create the task group model first
+* This model will be pretty simple, basically only have a title attribute
 
 
 ```sh [|1|2|3|]
@@ -423,6 +404,7 @@ rails generate model TaskGroup \
 
 Note:
 * Rails is handy and comes with a bunch of generators to spit out boilerplate code
+  * You can even create your own generators
 
 * We can run the model generator, specifying the model to be called `TaskGroup`
 
@@ -436,6 +418,7 @@ Note:
 * In theory this is good, but in practice fixtures are messy and annoying
   * I'll be showing a better alternative later on
 
+<!-- TODO: make a slide for this -->
 * After running this command a few files will be created.
 * A database migration to create the table
 * The ruby class for the model
@@ -523,6 +506,10 @@ Note:
 
 ## Testing Task Group Model
 
+Note:
+* Let's throw together some tests for the model
+* I'm not going to get too deep into testing since that's a big subject
+
 
 ```rb [|6-9|10-12|14-18]
 # test/models/task_group_test.rb
@@ -545,18 +532,15 @@ class TaskGroupTest < ActiveSupport::TestCase
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
-* Let's throw together some tests for the model
-* I'm not going to get too deep into testing since that's a big subject
-
 * Out of the box, Rails uses the Minitest framework, with additional helpers
 * The test file goes in the `test` directory, but will have a similar path and filename to the thing under test
   * So in this case, it's `test/models/task_group_test.rb`
 
 * First, we're going to build a task group, and set it to the instance variable `@task_group`
 * This will happen before every test
-* It's also worth mentioning that tests are isolated, and even the database gets reset between tests
 
 * Next, we'll have a test to make sure it actually is valid as a control
 
@@ -630,7 +614,7 @@ Note:
 
 * `notice` is a variable that controllers can set that tell the user something
   * Things like "item saved" or "item deleted"
-* Also notice how some tags start with `<%` and some start with `<%=`
+* Something to point out is how some tags start with `<%` and some start with `<%=`
   * They both are for running Ruby code in the template, but when there is a `=` the return value will be added to the page
 
 * `yield` is essentially where the individual templates for controllers will be added to the page
@@ -649,7 +633,7 @@ Note:
 <!-- TODO: should I give a sentence for what a controller is? -->
 
 
-```rb
+```rb []
 # app/controllers/task_groups_controller.rb
 
 class TaskGroupsController < ApplicationController
@@ -662,9 +646,6 @@ Note:
 * Note that `TaskGroups` is plural
   * Controllers should have plural names, and models are singular
 * Not every controller needs to correspond to a model, or vice-versa
-
-* As an aside, you want your classes to live in files that are the snake case version of the class name
-  * This is how the autoloader is able to work
 
 ---
 
@@ -699,16 +680,9 @@ Note:
 * The `TaskGroupsController` is going to have these methods which correspond to the standard CRUD actions
   * We can add other ones, and we don't need them all
 
-<!-- * You might've noticed, we have methods that sound pretty similar, like `new`/`create` or `edit`/`update`. -->
-<!-- * This is because we're going to have pages like `/task_groups/new`, which will be a `GET` action to show the page (`new`). -->
-<!-- * Then the form on that page will send a `POST` request to `/task_groups`, which hits the `create` action, which also does most of the actual work. -->
-<!-- * If you're building just an API, then you don't need to have these similar methods -->
-<!-- * Or if you don't need all the actions or have two views actions in one, then you don't need to have them -->
-
-* We're also going to have a couple private methods to keep our code from repeating itself
+* We're also going to have a couple private methods
 
 * Because there's user input for the params, we're going to want to sanitize them
-* And because we need this in a couple places, it's cleaner to just have a method
 
 * Next, we've got a method to set the task group
 
@@ -736,10 +710,8 @@ Note:
 
 * And add this `resources` call with the symbol `:task_groups`
 
-* By saying it's a resource, Rails will automatically know how to map the CRUD actions task groups controller to an endpoint and HTTP method
-* If we had uncommon actions we would need to manually declare the route
-* You can also indicate not to route things
-  * An example being if you don't have a show page for a resource, then you don't want an endpoint for that
+* By saying it's a resource, Rails will automatically know how to map the CRUD actions task groups controller to an endpoint and HTTP method and URL structure
+* If we have uncommon actions, we're able to manually declare them here too
 
 <!-- TODO: show routes that are generated -->
 <!-- TODO: explain create->new & update->edit -->
@@ -787,10 +759,10 @@ Note:
 
 * Next, we'll check if we're doing a create action
 * If we are, we're going to make a new task group instance with the params that will be given
-* Note that this doesn't save the task group, just gives us an instance to work with
+  * Note that this doesn't save the task group, just gives us an instance to work with
 
 * In neither of those scenarios, we create a minimal instance
-* This is mainly so we can pass it around without having `nil` errors
+* This is mainly so we can pass it around without having `nil` errors in our template
 
 ---
 
@@ -800,7 +772,7 @@ Note:
 * Alright, we referenced the `task_group_params` method in the last bit, so let's implement that
 
 
-```rb
+```rb []
 # app/controllers/tasks_controller.rb
 
 def task_group_params
@@ -829,7 +801,7 @@ Note:
 * This doesn't need to be done in a separate method
   * But it helps your controller code be organized and potentially keep from repeating
 * If you need to do any manipulating of params to usable values, this is a good place
-* Note that you want to do validation in the model, not here in the controller
+* Note that we don't want to do validation of the params here, those belong in the model, not the controller
 
 * In our case, the only param we're going to want for a task group is the name
 
@@ -846,7 +818,7 @@ Note:
 * We'll start with the index action
 
 
-```rb
+```rb []
 # app/controllers/tasks_controller.rb
 
 def index
@@ -859,7 +831,6 @@ Note:
 * Just get all of the task groups, and set them to an instance variable
 
 * If we wanted to, we could go more advanced than `all`, and add pagination, or filters, but that's not relevant at this time
-* Note that doing `all` isn't the most performant if you know you're going to have many thousands of records be returned
 
 
 ```erb [|3-7|9-13|6|11]
@@ -881,9 +852,7 @@ Note:
 Note:
 * On to the view template
 * The file will live in a directory in the views that has the same name as the controller
-<!-- * The file name is the name of the action in the controller -->
 
-* Anyway, this template is pretty simple
 * We have a sort of header
 * And a list of task groups
 
@@ -979,7 +948,7 @@ Note:
 * A cool thing about this helper is it's able to automatically change the text if we're creating or updating an item
 
 * It's worth pointing out that form helpers aren't necessary, they just exist to abstract your HTML
-* All that really matters is your inputs have the correct name
+* All that really matters is your inputs have the correct name attributes
 
 * Lastly, at the top of the form, we're making it so if the task group is invalid and fails to save, then the user can actually see why it failed
 
@@ -992,7 +961,7 @@ Note:
   * So we can move right on to the view
 
 
-```erb
+```erb []
 <!-- app/views/task_groups/show.html.erb -->
 
 <div class="d-flex justify-content-between align-items-center">
@@ -1036,7 +1005,7 @@ Note:
 * When it's invalid, we'll keep the user on that page, and show the errors
 
 
-```erb
+```erb []
 <!-- app/view/task_groups/edit.html.erb -->
 
 <h1>Editing task group</h1>
@@ -1054,11 +1023,11 @@ Note:
 
 ---
 
-## Delete Action
+## Destroy Action
 
 Note:
 * Now we've created a bunch of task groups, we gotta be able to get rid of them
-* So let's work on the delete action
+* So let's work on the destroy action
 
 
 ```rb [|4|5]
@@ -1076,10 +1045,7 @@ Note:
 * It runs `destroy!` on the task group
 * The presence of the `!` (which is pronounced "bang" in Ruby) at the end of the method name, means that this method will raise an error if it fails
   * Which is good in our case, since this can either work, or fail for a reason beyond the users control
-
-* I'll also say, there are `!` versions of the `save` and `update` methods we used earlier, but they're not ideal in our situation
-
-* Anyway, when that finishes, we'll take the user back to the list of task groups
+* When that finishes, we'll take the user back to the list of task groups
 
 
 ```erb [|6-11]
@@ -1303,7 +1269,7 @@ Note:
 * I'm going to go faster for these things, since it's fairly similar
 
 
-```sh
+```sh []
 rails g model Task \
   title:string \
   completed:boolean \
@@ -1319,7 +1285,7 @@ Note:
 
 ---
 
-## Create Task Migration Updates
+## Task Migration Updates
 
 
 ```rb [|6-7]
@@ -1344,7 +1310,7 @@ Note:
 
 * We're going to require `title` and `completed`
 * In the case of completed however, we're also saying if it's not given, just default to `false`
-* While `null` and `false` are functionally pretty similar, there's some edge cases we want to avoid
+* While `null` and `false` are pretty similar in Ruby, there's some edge cases we want to avoid, so it's better to have a default when working with booleans
 
 
 ```sh
@@ -1400,7 +1366,6 @@ end
 Note:
 * On the `TaskGroup` model, we can say it has many tasks
 * So when we're working with a task group, we can get all the tasks that belong to it by doing `task_group.tasks`
-* Keep in mind, this doesn't hit the database until we show an output or turn it to an array
 
 * Additionally, we're specifying when a task group is deleted we can also delete the tasks
 
@@ -2055,7 +2020,7 @@ Note:
 
 Note:
 * One last thing I want to show is a package called FactoryBot
-* It's a different approach to creating data in your tests than factories
+* It's a different approach to creating data in your tests than fixtures
 * Similar to what we were doing by creating records as needed, but does so in a more resuable, and sustainable way
 * This might be getting a bit advanced for the end of a talk with a lot of information thrown at you, but bear with me, we've almost made it to the end
 
@@ -2064,7 +2029,7 @@ Note:
 ## Install FactoryBot
 
 
-```rb
+```rb []
 group :development, :test do
   # ...
   gem "factory_bot_rails"
@@ -2077,7 +2042,7 @@ bundle install
 ```
 
 
-```rb
+```rb []
 # test/test_helper.rb
 
 class ActiveSupport::TestCase
@@ -2098,7 +2063,7 @@ Note:
 ## Create Factories
 
 
-```rb
+```rb []
 # test/factories/task.rb
 
 FactoryBot.define do
@@ -2110,7 +2075,7 @@ end
 ```
 
 
-```rb
+```rb []
 # test/factories/task_groups.rb
 
 FactoryBot.define do
@@ -2148,13 +2113,13 @@ Note:
 
 <!-- TODO: get pre change for what these are -->
 
-```rb
+```rb []
 setup do
   @task_group = create(:task_group)
 end
 ```
 
-```rb
+```rb []
 setup do
   @task = create(:task)
   @task_group = @task.task_group
@@ -2295,5 +2260,4 @@ This will create a couple files, and give you some instructions to follow.
 <!-- TODO: ensure all html blocks are actually erb -->
 <!-- TODO: ensure all comments are resolved or todo -->
 <!-- TODO: ensure all code has line numbers -->
-<!-- TODO: add r-stretch to solo codeblocks -->
-<!-- TODO: ensure use of task and task group shouldn't be wrapped in code blocks -->
+<!-- TODO: ensure all solo codeblocks with scrolls have r-stretch class -->
