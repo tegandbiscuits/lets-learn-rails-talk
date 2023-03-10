@@ -2016,57 +2016,76 @@ Note:
 
 ---
 
+# High Level Territory
+
+Note:
+* There's a couple additions that we could make to this codebase
+* For the sake of time, and to not keep slamming you with information, I'm going to just talk about these at a high level
+
+---
+
 ## Factory Bot
 
 Note:
-* One last thing I want to show is a package called FactoryBot
-* It's a different approach to creating data in your tests than fixtures
-* Similar to what we were doing by creating records as needed, but does so in a more resuable, and sustainable way
-* This might be getting a bit advanced for the end of a talk with a lot of information thrown at you, but bear with me, we've almost made it to the end
+* The first thing I want to mention is a gem called Factory Bot, it's used to create data for your tests
+* It's a lot more sustainable than creating all the data for a test manually
+* And in my opinion it's significantly easier to reason about than fixtures
+* It can also give a bit more confidence in your tests than fixtures, since it runs model callbacks (which fixtures do not)
+
+<!-- TODO: add link to it -->
+<!-- use factory_bot_rails -->
 
 ---
 
-## Install FactoryBot
-
-
-```rb []
-group :development, :test do
-  # ...
-  gem "factory_bot_rails"
-end
-```
-
-
-```sh
-bundle install
-```
-
-
-```rb []
-# test/test_helper.rb
-
-class ActiveSupport::TestCase
-  # ...
-  include FactoryBot::Syntax::Methods
-end
-```
+## Example Use
 
 Note:
-* FactoryBot can be used outside of Rails, but we're in Rails, so we're going to use an official version that gives us a few small niceties
-* Also means you don't have to add the skip fixtures flag
-* Better than fixtures because they're created only when we need them, and run model callbacks rather than going straight into the database
-* We can also delete the `.keep` file in the fixtures directory
-* In our case, we can also remove `fixtures :all` from the test setup
-
----
-
-## Create Factories
+* Before I show how they're implemented, let's take a look at what it looks like to use them
 
 
 ```rb []
-# test/factories/task.rb
+setup do
+  task_group = TaskGroup.create!(title: 'i am a group')
+  @task = Task.create!(title: 'i am a task', task_group: task_group)
+end
+```
 
+```rb []
+setup do
+  @task = create(:task)
+end
+```
+<!-- .element: class="fragment" -->
+
+```rb []
+setup do
+  @task = create(:task, title: 'i am a task')
+end
+```
+<!-- .element: class="fragment" -->
+
+Note:
+* Think back to our tests for the task model
+* We were creating a task group, but it wasn't really needed
+* And we also had to give values to all the attributes even though we don't really care about their values
+
+* With Factory Bot we can be more minimal with this creation, and basically just say "create me a task", and it handles everything
+* But if we did want to specify a title for the task, we're able to do just pass one in
+
+---
+
+# Factory Definition
+
+Note:
+* This isn't completely magic though, because we still need to actually define what will go in those records
+
+
+```rb []
 FactoryBot.define do
+  factory :task_group do
+    sequence(:title) { |n| "Task Group #{n}" }
+  end
+
   factory :task do
     sequence(:title) { |n| "Task #{n}" }
     task_group
@@ -2074,187 +2093,142 @@ FactoryBot.define do
 end
 ```
 
-
-```rb []
-# test/factories/task_groups.rb
-
-FactoryBot.define do
-  factory :task_group do
-    sequence(:title) { |n| "Task Group #{n}" }
-
-    trait :with_tasks do
-      transient do
-        tasks_count { 2 }
-      end
-
-      after(:create) do |task_group, evaluator|
-        create_list(:task, evaluator.task_count, task_group: task_group)
-      end
-    end
-  end
-end
-```
-
 Note:
-* Because out factories have the same name as our model, it's able to automatically figure out what class this is
-* The factories are supposed to only be the minimum things required
-* If something is needed for a test, then it should be specified in the test
-* But in situations where we just need a task to exist but don't care about the details, we don't have to bother with them
-* The impact of this isn't super obvious with just these two models, but these are a lot easier to manage than fixtures which can get very tangly pretty easily
-
-* In the second one you can see we have the ability to define traits
-* In this case, we can create a task group and specify it has tasks
-* A transient attribute is just one that can be passed in, but doesn't actually exist on the model
-
----
-
-## Use the Factories
-
-
-<!-- TODO: get pre change for what these are -->
-
-```rb []
-setup do
-  @task_group = create(:task_group)
-end
-```
-
-```rb []
-setup do
-  @task = create(:task)
-  @task_group = @task.task_group
-end
-```
-
-Note:
-* Since none of our tests actually care about the name, we can slim up our code
-* Instances where we use reference a task and task group can just use the group that was created by creating a task
-
-* Notice how in teh model tests we're using `build` instead of `create`
-* These tests don't need the record to be saved, so we don't need to bother with that
-
----
-
-# We made it
-
-<!-- TODO: get demo video of the whole thing -->
-<!-- TODO: get lines of code added and removed since init -->
+* Here is what a minimal version of our factories could look like
+* We've got a factory for a task group, which will all have unique, incremental titles
+* Then we do the same thing for the task factory, but we also say it references a task group, which will create one for us if one isn't given
+* Due to the name of the factories, Factory Bot is able to map these to their respective model classes
 
 ---
 
 # Authorization and Authentication <!-- .element: class="r-fit-text" -->
+
+Note:
+* The last thing I want to get into a bit more detail about is how to do authentication and authorization
+* Rails doesn't actually have a built in way to do this, but there's a few popular gems to avoid rolling this yourself
+  * Which beyond speed of implementing, you're better off not doing security yourself
 
 ---
 
 ## Devise
 
 Note:
-* Can be used for API stuff
-* Can do OAuth integration
-* Can get current user
-* Get a bunch of pre-made user management stuff
+* Devise is a gem to manage authentication of users
+* When you add it, you can either create a user model or attach it to an existing one
+* Out of the box
+  * You get the ability to authenticate controllers and your controllers are aware of the current user
+  * Basic templates to let users manage their accounts
+* There's a number of plugins for it, even for adding OAuth and API token support
 
 ---
 
 ## Pundit
 
----
-
-## Example of a Pundit Policy
-
----
-
-# Next Steps
+Note:
+* For authorization, there's a few popular libraries, but I recommend Pundit
+* Pundit has two sides that it can help with
+* The first is policies, which are in charge of permitting access to an endpoint
+* The second is scopes, which are for filtering sets of data to only data the user has access to
 
 ---
 
-## Where to Deploy
+## Pundit Policies
 
 Note:
-* SMTP server
-* Automate running migrations
+* Let's take a look a policy in Pundit
+
+```rb []
+class TaskGroupsController < ApplicationController
+  def show
+    @task_group = TaskGroup.find(params[:id])
+    authorize @task_group
+  end
+end
+```
+
+```rb []
+class TaskGroupPolicy < ApplicationPolicy
+  def show?
+    @task_group.user == current_user
+  end
+end
+```
+
+Note:
+* In this example, pretend like task groups belong to users
+* When we run the `authorize` method in the `show` action of the `TaskGroupController`, it will go to the `TaskGroupPolicy` and run the `show?` method
+* The method in the policy will return either `true` or `false` depending if the user has access
 
 ---
 
-## Links to Keep Learning
+## Pundit Scopes
+
+Note:
+* Now let's see what a Pundit scope might look like
+
+```rb []
+class TaskGroupsController < ApplicationController
+  def index
+    @task_groups = policy_scope(TaskGroup)
+  end
+end
+```
+
+```rb []
+class TaskGroupPolicy < ApplicationPolicy
+  # ...
+
+  # TODO: double check this is correct
+  class Scope
+    def resolve
+      scope.where(user: current_user)
+    end
+  end
+end
+```
+
+Note:
+* In the `resolve` method, `scope` is whatever we passed to `policy_scope` in the controller
+* So in our case, we start with all task groups, then add a where clause to get the ones just for that user
+* Pundit works out which scope to use by the name of the model we give it
 
 ---
 
-## Namedropping Packages
+## Keep Learning
 
-* Grape for APIs
-* Strong migrations
-* Linters
-* Overmind
-* Strong migrations
-* RSpec
-* Kaminari
-* Rubymine
-* Pry (and the console)
-* Mailhog
-* Bullet
+https://guides.rubyonrails.org
+
+Note:
+* If you want to keep learning about Rails, the Rails guides are a really good resource that go into depth without being straight API docs
 
 ---
+
+## Name Dropping Gems
+
+* Rubocop (linting)
+* RSpec (testing framework)
+* Ransack (model filtering)
+* Kaminari (pagination)
+* Strong Migrations (catch unsafe migrations)
+* Pry (debug tool)
+
+---
+
+# We Made It
+
+<!-- TODO: get a link to the repo -->
+<!-- TODO: link to long form article article -->
+<!-- TODO: confetti gif -->
+<!-- TODO: get lines of code added and removed since init -->
+
+Note:
+* We've made it to the end!
+* Here's a link to the code if you want to explore it in it's full context
 
 # Thank You!
 
-<!-- TODO: link to code -->
-<!-- TODO: link to long form article article -->
-
-<!--
-## Get Some Users
-
-First thing we're going to want is some users.
-User management can be pretty difficult, but with the Devise gem it's really easy to hit the ground running.
-
-Devise is a gem for rails that gives you a bunch of tools for common user management stuff.
-It really shines when used in a MPA, but is still very useful when building an API only backend.
-
-Inside the `Gemfile`, we're going to add `gem "devise"`.
-Then back in the terminal, we're going to run `bundle install`.
-
-After that, run `rails g devise:install`.
-This will create a couple files, and give you some instructions to follow.
-
-* Install devise
-* Create user model
-* Generate views
-* Authorize a home page
-* Have an index page that returns all for any user
-
-## Test Authentication
-
-* Add factorybot
-* User model test
-* Capybara test for logging in
-* Controller test for authentication required
-* Setting up mailhog
-
-## Setting up pundit
-
-* Add gem
-* Require authentication
-* Implement authentication and scope
-* Test for requiring authentication on controller
-* Tests for pundit code
-
-## Cool things that are easy
-
-* Ability to have collaborators on a task board
-	* Adjust the pundit scopes and it just works
-	* Mailers make sending invites easy
-	* Just need a model for board accessible by
-	* Easy to send emails when someone completes a task
-	* Even easy to add webhooks to let multiple users see changes in real time
-		* Note that actioncable scales weirdly
-* Mailers for upcoming tasks that are due
-* Zhoosh it up to be more SPA like with Turbo
-
--->
-
 <!-- TODO: add rubocop to make sure not doing anything bad apart from frozen_string_literal missing -->
 <!-- TODO: ensure all TODO items are resolved -->
-<!-- TODO: who am I slide? -->
 <!-- TODO: ensure all code blocks have line numbers -->
 <!-- TODO: need a back button from single group to all groups -->
 <!-- TODO: ensure all html blocks are actually erb -->
