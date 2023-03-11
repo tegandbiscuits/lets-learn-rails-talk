@@ -116,74 +116,113 @@ Note:
 * Data seeding <!-- .element: class="fragment" -->
 
 Note:
-* The UI and UX could be a lot slicker
-* For the sake of simplicity and time, this might look a little rough
+* ...A todo app
+* A sort of overview of what we'll cover here...
+* For the sake of time and simplicity, the UI is going to be a little rough
+
+<!-- TODO: add a demo video -->
 
 ---
 
 # Ruby Primer
 
 Note:
-* If you're looking at Rails for the first time, there's a pretty good chance you're not super familiar with Ruby
-* It's fairly intuitive by reading it (assuming you know how to program), but here's a few things that are worth pointing out
-<!-- * Ruby is used for things outside of rails, but ruby developers and at (at some point) rails developers is a pretty big overlap. -->
+* But first, I want to make a small diversion
+* If this is your first experience with Rails, there's a good chance you're not very familiar with Ruby
+* It's a pretty intuitive language, but I want to go over a few things that will make it easier to understand this code
 
 ---
 
 ## Packages
 
-* Packages are called gems.
-* They can be declared in a `Gemfile`.
-* Gemfiles are interacted with using a tool called Bundler.
+<!-- TODO: get rubygems and bundler logos -->
+
+Note:
+* Packages are called gems
+* They can be installed globally or in a project with a `Gemfile`
+* Gemfiles are managed using a tool called Bundler
 
 ---
 
 ## Some Things Can Be Implied/Omitted
 
 Note:
-* A big thing is that might throw someone off, is the amount of syntax that can be implied
+* One of the more significant differences is the amount of syntax that can be implied or omitted
 
 
 ### Return Statements
 
 ```rb []
+# no
 def greet
   return "hello world"
 end
-```
 
-```rb []
+# yes
 def greet
   "hello world"
 end
 ```
 
+```rb []
+# exiting early
+def speak(is_cat)
+  return "meow" if is_cat
+
+  "woof"
+end
+speak(true)
+#=> "meow"
+speak(false)
+#=> "woof"
+```
+
 Note:
-* The return keyword at the end of functions
+* The return keyword for example
+* Unless you want to exit a function early, you don't need to bother with it
+* The last line is what will be returned
 
 
 ### Parenthesis
 
 ```rb []
+def greet()
+  "hello world"
+end
+# same as
 def greet
   "hello world"
 end
-greet
-#=> "hello world"
-
-def foo(name)
+# with params
+def greet_person(name)
   "hello #{name}"
 end
-greet "friends"
-#=> "hello friends"
+```
+
+```rb []
+greet()
+greet
+
+greet_person("friends")
+greet_person "friends"
+```
+<!-- .element: class="fragment" -->
+
+Note:
+* You also don't need to include parenthesis when declaring functions with no parameters
+* You also don't need them when running functions (with or without parameters)
+
+
+```rb []
+greet_person(greet_person(greet()))
+# can be expressed as
+
+greet_person greet_person greet
+# but please don't do this 🤢
 ```
 
 Note:
-* Also parenthesis aren't needed when you declare a function with no parameters
-* Similarly, when you run function you don't need to use parens
-
-* People know this is confusing
-* Usually you will only see parenthesis being omitted when you're running just a single function with arguments
+* Please don't go to crazy with this, because it gets confusing pretty fast
 
 
 ### Curly Braces For Hashes
@@ -192,7 +231,7 @@ _Only when the last argument of a function_
 
 ```rb []
 def do_something(name, options)
-  # ...
+  #
 end
 
 do_something("foo", { option_a: "meow", option_b: "woof" })
@@ -200,34 +239,18 @@ do_something("foo", { option_a: "meow", option_b: "woof" })
 do_something("foo", option_a: "meow", option_b: "woof")
 ```
 
-Note:
-* The curly braces around hashes are also (sometimes) optional
-* For context, a hash in Ruby is equivalent to a generic object in JavaScript
-* This only applies to when you're passing a hash as an argument to a function, and it's the last argument of it
-
----
-
-## Functions Can Run Pretty Much Anywhere
-
-_but still have contexts they are scoped to_
-
 ```rb []
-class Foo
-  puts "hello world"
+# can also declare functions like
+def do_something(name, option_a:, option_b:)
+  # ...
 end
-#"hello world"
-#=> nil
+# this will make both `option_a` and `option_b` required
 ```
+<!-- .element: class="fragment" -->
 
 Note:
-* Functions and methods can be ran nearly everywhere
-  * Provided they exist in the scope of that context
-
-* In this example, we have a `puts` statement being ran at the class level
-* So when this code is evaluated, it will log `"hello world"`
-  * To reiterate, this will generally only happen once, not for every instance of `Foo`
-
-* You'll typically see this pattern being used as a way to configure modules for classes, or for metaprogramming
+* You don't always need to include the curly braces when passing a `Hash` as an argument
+* Kind of relevant to mention, you can create keyword arguments like this
 
 ---
 
@@ -236,6 +259,15 @@ Note:
 ```rb
 :i_am_a_symbol
 ```
+
+Note:
+* Ruby also has a type called a `Symbol`
+* They're not unique to Ruby, but I don't think they're very common in other languages
+* A symbol kind of sits between a string variable and a constant
+* Typically end users won't see or interact with symbols (at least knowingly)
+* They're generally used as arguments where you have a set amount of possible values
+  * And by extension, also convey something isn't an arbitrary value better than a string
+
 
 ```rb []
 def speak(tone = nil)
@@ -252,20 +284,41 @@ speak(:loud)
 ```
 
 Note:
-* Lastly, symbols
-* Symbols aren't unique to Ruby, but they're not very common in other languages
+* So in this example, we're saying argument `tone` isn't just a random string, it does something special when the value is the symbol `:loud`
+* There's also a technical difference in that if you have multiple symbols of the same value, they'll all use the same space in memory
+  * So they're more lightweight than strings
+  * In practice, this knowledge has never been useful to me
 
-* Symbols are like string that sit between variables and constants
-* Typically end users don't see or interact with symbols
-  * However a symbol can be made from or turned into a string
-* Generally they're used as arguments where you have a set amount of values for something
-  * And by extension, also convey something isn't an arbitrary value better than a string does
+---
 
-* So in this example, we're saying argument `tone` isn't just a random string, it does something special when the value `:loud`
+## Functions Can Run Anywhere
 
-* The main, if not only, technical difference is that symbols that are the same value, regardless of context, all use the same object in memory
-  * So they are a bit more performant and lightweight
-* In practice, this knowledge has never been useful to me
+_but still have contexts they are scoped to_
+
+Note:
+* One of the more powerful things about Ruby is that functions can run pretty much wherever
+* This opens the door greatly for being able to do metapgramming
+
+
+```rb []
+def add_a_greeting(method_name)
+  self.define_method(method_name) do
+    puts "hello world"
+  end
+end
+
+class Foo
+  add_a_greeting(:greet)
+end
+
+Foo.new.greet
+#=> "hello world"
+```
+
+Note:
+* So in this example, we've got a function called `add_a_greeting` that adds a method to whatever the current scope is
+* So if we run `add_a_greeting` when declaring the class `Foo` it will add an instance method called `greet` to `Foo`
+* Pretty powerful stuff
 
 ---
 
