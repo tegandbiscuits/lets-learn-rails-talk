@@ -5,6 +5,7 @@ Note:
 * I'm a software engineer at CodeClimate
 * And today I'm going to talk to y'all about the framework, Ruby on Rails
 
+<!-- TODO: add rails logo -->
 <!-- TODO: add handles and a link to the presentation and demo code -->
 
 ---
@@ -47,8 +48,6 @@ Note:
 * The benefit of this is that your code will be very organized and maintainable, and it's easier to find patterns to help you create your own abstractions
 * Apart from keeping you from reinventing the wheel, it also helps other developers (or you in the future) pick up a codebase
   * The basic stuff can be assumed knowledge
-
-<!-- conventions are how rails is able to do it's magic -->
 
 ---
 
@@ -128,6 +127,8 @@ Note:
 ---
 
 # Ruby Primer
+
+<!-- TODO: add ruby logo -->
 
 Note:
 * But first, I want to make a small diversion
@@ -333,14 +334,11 @@ Note:
 
 Note:
 * Ok, let's actually get into coding
-
 * Obviously, you need Ruby on your system
-  * Strongly recommend either `rbenv` or `rvm`
-* Once you have one of those installed select a version of Ruby to use
+  * I strongly recommend either `rbenv` or `rvm`
   * This demo was made with using Ruby 3
-
 * Next you're going to need the Rails CLI, which can be installed by running `gem install rails`
-  * At this time, the current version if Rails is 7.0
+  * At this time, the current version of Rails is 7.0
 
 ---
 
@@ -356,18 +354,18 @@ rails new planner --database postgresql
 
 Note:
 * This can be done using the `rails new` command
-
 * Here we're saying the project will be called `planner`
-* And we're going to use Postgres as the database for ActiveRecord to use
-  * There's a number of different databases you can use but Postgres is usually the best choice
+* And we're going to use Postgres as our database
+  * There's a number of different databases that you can use but Postgres is usually the best option
   * You can always change it later
-  <!-- TODO: can you add multiple types of databases at once now? -->
-
-* There's also a bunch of different flags you can pass, but I'm not going to get into those just yet
-
+* There's also a bunch of different flags that you can give, so I recommend checking them out before creating a project
 * Running this will
   * Create a `planner` directory with a bunch of files
   * Run `bundle install` to install the default gems
+
+
+![picture!](bundle-text:./assets/new-project-structure.png)
+<!-- TODO: screenshot of files -->
 
 ---
 
@@ -375,15 +373,13 @@ Note:
 
 Note:
 * I have a quick aside about JavaScript and Rails that I want to make
-* As much as I love Rails, the core Rails maintainers don't always have the best opinions in regards to frontend development
-
+* As much as I love Rails, the core maintainers don't always have the best opinions in regards to frontend development
 * The last few major versions of Rails have dramatically changed the default JavaScript setup
-  * So it's a little wild
 * Currently, they're big on using import maps
-  * Which is fine if you aren't going too heavy into JavaScript, but if you want to transpile code or do anything advanced, I'd recommend setting up webpack or esbuild
+  * Which is fine if you aren't going too heavy into JavaScript
+  * But if you want to transpile code or do anything advanced, I'd recommend setting up webpack or esbuild
 * Rails also includes the JavaScript packages Turbo and Stimulus by default
   * In my opinion, these are pretty slick tools, that do pair well with Rails, however maybe shouldn't be there by default
-
 * That said, to not slam you with information, I'm going to just leave everything as is
 * However if you get into more frontend heavy work, you might want to take a second look at the Rails defaults
 
@@ -409,45 +405,20 @@ rails test
 
 Note:
 * Ok, let's get things running
-
 * First, go to the directory of the project
 * Then, we can run `rails db:create` to create the databases for our dev and test environments
 * Lastly, run `rails serve`, and you should be able to go `localhost:3000` and see the hello world screen
   * You'll have to restart sometimes, but generally can just leave this running
-
 * You can also run the tests
 * There aren't any tests, but you should at least see there aren't errors with your environment
 
-<!--
-## Overview of Generated Things
-
-Most code will live in `app` or `test`
-
-* `assets`: You can throw things you want in your rails views here
-* `channels`: Channels are essentially controllers for websockets
-* `controllers`: Code that makes up your endpoints
-* `helpers`: Simple functions used in views for outputting presentational stuff
-* `jobs`: Single purpose classes that you can run as background tasks
-* `mailers`: Code that builds and sends emails
-* `models`: Code that represents data
-* `views`: Templates that controllers render
-
-ote:
-* For mailers to work, they need to be plugged into an SMTP server
-  * For local development, Mailhog is a really useful tool
-* Models are usually database backed, but don't need to be
-* Your views can create different output, such as HTML, JSON, even CSVs or plaintext
-* There's a bunch of different templating languages you can use, but the default, ERB, is good and simple
--->
-
 ---
 
-# Generate Task Group Model
+# Task Group Model
 
 Note:
-* Now we've got things initialized, let's get to implementing stuff
-
-* Tasks will belong to task groups, so lets create the task group model first
+* Now we've got our project initialized, let's get to implementing some stuff
+* `Task`s will belong to `TaskGroup`s, so lets create the `TaskGroup` model first
 * This model will be pretty simple, basically only have a title attribute
 
 
@@ -462,26 +433,20 @@ rails generate model TaskGroup \
 Note:
 * Rails is handy and comes with a bunch of generators to spit out boilerplate code
   * You can even create your own generators
-
-* We can run the model generator, specifying the model to be called `TaskGroup`
-
-* Optionally, we can also use this syntax of `property_name:type` to generate more code for us
-* So here we have one property called `title` that will be a `string`
-* There's a bunch of types you can use
-  * However you're a little limited by what database you use
-
-* I also added the flag `--skip-fixture` because we don't want to use fixtures
-* Fixtures are basically YAML representation of your database, that get loaded to the test database so you don't need to have as much setup code in your tests
-* In theory this is good, but in practice fixtures are messy and annoying
-  * I'll be showing a better alternative later on
-
+  * Worth mentioning, you don't need them, they're just for convenience
+* We'll run the model generator, specifying the model will be called `TaskGroup`
+* We can add more arguments using this `property_name:type` format to save us some typing
+  * So here we have one property called `title` that will be a `string`
+  * There's a bunch of types you can use, however you're slightly limited by the database you're using
+* I also added the flag `--skip-fixture`
+  * Fixtures are basically YAML representation of your database, that get loaded to the test database to reduce the amount of test setup
+  * In theory this is good, but in practice fixtures get messy really fast
+    * I'll be showing a better alternative later on
 <!-- TODO: make a slide for this -->
 * After running this command a few files will be created.
 * A database migration to create the table
 * The ruby class for the model
 * A test file for the class
-
-* It's also worth pointing out that the generators are just for convenience, you don't need to use them
 
 ---
 
@@ -542,12 +507,10 @@ Note:
 
 Note:
 * There's a few reasons why we're saying `title` is required in two places
-
-* The database is a stronger enforcer of this requirement
-* It also makes it easy to get an idea of our app just by looking at the data
-
-* However, doing the validation in Rails is more performant, since it can potentially save us a useless database call
-* The Rails validation is also more helpful if a record is invalid
+* The database is able to enforce this more strictly
+* And also gives us an idea of our app just by looking at the data
+* However, doing the validation in Rails can be more performant, since it can potentially save us a useless database call
+* The Rails validation also gives us a better output if it's invalid
   * Both for you as a developer and for the end user
 
 ---
@@ -556,8 +519,10 @@ Note:
 rails db:migrate
 ```
 
+<!-- TODO: screenshot the output -->
+
 Note:
-* With Postgres running, we can now do the migration
+* With Postgres running, we can now run the migration
 
 ---
 
@@ -565,7 +530,7 @@ Note:
 
 Note:
 * Let's throw together some tests for the model
-* I'm not going to get too deep into testing since that's a big subject
+* I'm not going to get too deep into testing since that's a big subject, just want to give an overview
 
 
 ```rb [|6-9|10-12|14-18]
@@ -592,16 +557,14 @@ end
 <!-- .element: class="r-stretch" -->
 
 Note:
-* Out of the box, Rails uses the Minitest framework, with additional helpers
-* The test file goes in the `test` directory, but will have a similar path and filename to the thing under test
-  * So in this case, it's `test/models/task_group_test.rb`
-
-* First, we're going to build a task group, and set it to the instance variable `@task_group`
-* This will happen before every test
-
-* Next, we'll have a test to make sure it actually is valid as a control
-
-* Then we test that setting title to `nil` makes the task group invalid
+* Out of the box, Rails uses the Minitest framework, with some additional helpers
+* Test files go in the `test` directory, which will look pretty similar to the structure of the `app` directory
+  * So in this case, our model test will go in `test/models`
+* Let's go over this quickly
+  * First, we're going to build a task group, and set it to the instance variable `@task_group`
+    * This will happen before every test
+  * Next, we have a control test to make sure it's valid
+  * Then we test that setting `title` to `nil` makes the `TaskGroup` invalid
 
 
 ```sh
@@ -2255,6 +2218,8 @@ Note:
 
 https://guides.rubyonrails.org
 
+<!-- TODO: confreaks youtube for railsconf talks -->
+
 Note:
 * If you want to keep learning about Rails, the Rails guides are a really good resource that go into depth without being straight API docs
 
@@ -2292,3 +2257,4 @@ Note:
 <!-- TODO: ensure all comments are resolved or todo -->
 <!-- TODO: ensure all code has line numbers -->
 <!-- TODO: ensure all solo codeblocks with scrolls have r-stretch class -->
+<!-- TODO: add a high level table of contents -->
