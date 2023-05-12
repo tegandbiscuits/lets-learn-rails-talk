@@ -3,7 +3,9 @@
 Note:
 * Hi everyone, I'm Tegan
 * I'm a software engineer at CodeClimate
-* And today I'm going to talk y'all about Ruby on Rails
+* And today I'm going to talk to y'all about the framework, Ruby on Rails
+
+<!-- TODO: add handles and a link to the presentation and demo code -->
 
 ---
 
@@ -13,7 +15,7 @@ Note:
 * So I think you should use Rails
 * Rails is a really powerful framework that lets you build complex web apps in a fast, yet sustainable way
 * It's pretty big on the idea that you shouldn't need to bother thinking about the things that every web app does
-  * So you can just focus on what makes your product actually unique
+  * Which helps you focus on what makes your product actually unique
 * You can use it to build
   * Traditional multipage apps
   * APIs
@@ -56,7 +58,7 @@ Note:
 * Rails is a pretty established framework, which at this point means that a lot of third party packages are also mature and battle tested
   * A fair bit are even maintained by big companies, like Shopify, GitHub, or ThoughtBot
 * There's a huge range of packages out there in Ruby
-  * Big, complex things like user management with Devise
+  * Big, complex things like user management, or ecommerce tools
   * Or small things like validating phone numbers
 * The community also has a really big testing focus, so nearly everything is testable in a confident way
 
@@ -117,6 +119,7 @@ Note:
 
 Note:
 * ...A todo app
+* Very fancy and original
 * A sort of overview of what we'll cover here...
 * For the sake of time and simplicity, the UI is going to be a little rough
 
@@ -129,7 +132,7 @@ Note:
 Note:
 * But first, I want to make a small diversion
 * If this is your first experience with Rails, there's a good chance you're not very familiar with Ruby
-* It's a pretty intuitive language, but I want to go over a few things that will make it easier to understand this code
+* It's a pretty intuitive language, but I want to go over a few things that will make it easier to understand the code that you'll see
 
 ---
 
@@ -222,7 +225,7 @@ greet_person greet_person greet
 ```
 
 Note:
-* Please don't go to crazy with this, because it gets confusing pretty fast
+* Please don't go to crazy with this, because this can get pretty confusing pretty fast
 
 
 ### Curly Braces For Hashes
@@ -316,7 +319,8 @@ Foo.new.greet
 ```
 
 Note:
-* So in this example, we've got a function called `add_a_greeting` that adds a method to whatever the current scope is
+* This is kind of an advance example, so it's fine if you don't completely understand it
+* We've got a function called `add_a_greeting` that adds a method to whatever the current scope is
 * So if we run `add_a_greeting` when declaring the class `Foo` it will add an instance method called `greet` to `Foo`
 * Pretty powerful stuff
 
