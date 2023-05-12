@@ -1,10 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "start": "parcel index.html"
+    "start": "http-server"
   },
   "dependencies": {
-    "parcel": "^2.8.3",
-    "reveal.js": "^4.4.0"
+    "@highlightjs/cdn-assets": "^11.8.0",
+    "highlight.js": "^11.8.0",
+    "http-server": "^14.1.1",
+    "reveal.js": "^4.5.0"
   }
 }

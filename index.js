@@ -1,13 +1,9 @@
-import Reveal from 'reveal.js';
-import Markdown from 'reveal.js/plugin/markdown/markdown';
-import Notes from 'reveal.js/plugin/notes/notes';
-import Highlight from 'reveal.js/plugin/highlight/highlight';
+import Reveal from './node_modules/reveal.js/dist/reveal.esm.js';
+import Markdown from './node_modules/reveal.js/plugin/markdown/markdown.esm.js';
+import Notes from './node_modules/reveal.js/plugin/notes/notes.esm.js';
+import Highlight from './node_modules/reveal.js/plugin/highlight/highlight.esm.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  const markdownLink = document.querySelector('link[data-markdown]');
-  const markdownContainer = document.querySelector('.reveal .slides section[data-markdown]');
-  markdownContainer.dataset.markdown = markdownLink.href;
-
   const deck = new Reveal({
     plugins: [
       Markdown,
