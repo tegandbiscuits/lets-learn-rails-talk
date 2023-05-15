@@ -13,6 +13,10 @@ Note:
 
 https://github.com/tegandbiscuits/lets-learn-rails-talk
 
+Note:
+* Before we begin, here's a link to the slides and final code if you want to take a look later
+* It'll be at the end too
+
 ---
 
 ## Links to Me
@@ -136,6 +140,9 @@ Note:
 
 
 <video data-autoplay src="./assets/demo-full.mov"></video>
+
+Note:
+* Here's a video of what we're going to make so you're less in the dark
 
 ---
 
@@ -884,15 +891,12 @@ Note:
 Note:
 * On to the view template
 * The file will live in a directory in the views that has the same name as the controller
-
 * We have a sort of header
 * And a list of task groups
-
 * Rails comes with this function called `link_to` which creates an `a` tag for us
 * In the first use of this, we can use a helper function `new_task_group_path` to determine what the actual path is
   * Rails is smart enough to know how to get the path for us
   * This way if that changes in our config, we don't have to update every use
-
 * In the second use, since we're linking to a specific resource, we can just pass in that instance
   * Rails will automatically figure out what the path for that instance is, even including the ID
 
@@ -2399,6 +2403,8 @@ https://github.com/tegandbiscuits/lets-learn-rails-talk
 Note:
 * We've made it to the end!
 * Here's a link to the code if you want to explore it in it's full context
+
+---
 
 # Thank You!
 
