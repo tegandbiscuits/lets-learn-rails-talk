@@ -1,12 +1,24 @@
 # Let's Learn Rails
 
+![Ruby on Rails Logo](./assets/logo-rails.svg)
+
 Note:
 * Hi everyone, I'm Tegan
 * I'm a software engineer at CodeClimate
 * And today I'm going to talk to y'all about the framework, Ruby on Rails
 
-<!-- TODO: add rails logo -->
-<!-- TODO: add handles and a link to the presentation and demo code -->
+---
+
+## Slides and Code
+
+https://github.com/tegandbiscuits/lets-learn-rails-talk
+
+---
+
+## Links to Me
+
+* [github.com/tegandbiscuits](https://github.com/tegandbiscuits)
+* [dev.to/tegandbiscuits](https://dev.to/tegandbiscuits)
 
 ---
 
@@ -122,13 +134,14 @@ Note:
 * A sort of overview of what we'll cover here...
 * For the sake of time and simplicity, the UI is going to be a little rough
 
-<!-- TODO: add a demo video -->
+
+<video data-autoplay src="./assets/demo-full.mov"></video>
 
 ---
 
 # Ruby Primer
 
-<!-- TODO: add ruby logo -->
+![Ruby Logo](./assets/logo-ruby.svg)
 
 Note:
 * But first, I want to make a small diversion
@@ -138,8 +151,6 @@ Note:
 ---
 
 ## Packages
-
-<!-- TODO: get rubygems and bundler logos -->
 
 Note:
 * Packages are called gems
@@ -364,24 +375,27 @@ Note:
   * Run `bundle install` to install the default gems
 
 
-![picture!](bundle-text:./assets/new-project-structure.png)
-<!-- TODO: screenshot of files -->
+![New project structure!](./assets/new-project-structure.png)
+<!-- .element: class="r-stretch" -->
+
+Note:
+* Here you can see some of what was generated
 
 ---
 
 ## A Note About JavaScript + Rails
 
 Note:
-* I have a quick aside about JavaScript and Rails that I want to make
+* I want to take a moment to talk about JavaScript and Rails real quick
 * As much as I love Rails, the core maintainers don't always have the best opinions in regards to frontend development
 * The last few major versions of Rails have dramatically changed the default JavaScript setup
 * Currently, they're big on using import maps
   * Which is fine if you aren't going too heavy into JavaScript
-  * But if you want to transpile code or do anything advanced, I'd recommend setting up webpack or esbuild
+  * But if you want to transpile code or do some advanced stuff, I'd recommend setting up webpack or something
 * Rails also includes the JavaScript packages Turbo and Stimulus by default
-  * In my opinion, these are pretty slick tools, that do pair well with Rails, however maybe shouldn't be there by default
-* That said, to not slam you with information, I'm going to just leave everything as is
-* However if you get into more frontend heavy work, you might want to take a second look at the Rails defaults
+  * Which in my opinion, are pretty slick tools, that pair very well with Rails, however maybe shouldn't be there by default
+* That said, to not slam you with information, I'm going to just leave everything as it is
+* But to reiterate, if you're going to do a lot of frontend work, I'd suggest taking a look at changing some of the defaults
 
 ---
 
@@ -391,24 +405,29 @@ Note:
 cd planner
 # with postgres (or whichever database) running
 rails db:create # creates planner_development and planner_test
-rails serve
+rails server
 ```
-
-<!-- TODO: hello world screenshot -->
-
-```sh
-rails test
-```
-<!-- .element: class="fragment" -->
-
-<!-- TODO: bare test output screenshot -->
 
 Note:
 * Ok, let's get things running
 * First, go to the directory of the project
-* Then, we can run `rails db:create` to create the databases for our dev and test environments
-* Lastly, run `rails serve`, and you should be able to go `localhost:3000` and see the hello world screen
-  * You'll have to restart sometimes, but generally can just leave this running
+* Then, we can run `rails db:create` to create our dev and test databases
+* Lastly, run `rails server`, and you should be able to go `localhost:3000` and see the hello world screen
+
+
+![Default screen](./assets/default-screen.png)
+
+Note:
+* You'll have to restart the server sometimes, but generally can just leave this running
+
+
+```sh
+rails test
+```
+
+![Test output with no tests](./assets/output-no-tests.svg)
+
+Note:
 * You can also run the tests
 * There aren't any tests, but you should at least see there aren't errors with your environment
 
@@ -419,7 +438,8 @@ Note:
 Note:
 * Now we've got our project initialized, let's get to implementing some stuff
 * `Task`s will belong to `TaskGroup`s, so lets create the `TaskGroup` model first
-* This model will be pretty simple, basically only have a title attribute
+* If you're not aware a model is just code that represents and manages specific parts of your data
+* This model will be pretty simple, it'll only have a title attribute
 
 
 ```sh [|1|2|3|]
@@ -428,32 +448,32 @@ rails generate model TaskGroup \
   --skip-fixture
 ```
 
-<!-- TODO: show what this generates -->
+![Generate task group model output](./assets/output-task-group-model-generation.svg)
+<!-- .element: class="fragment" -->
 
 Note:
 * Rails is handy and comes with a bunch of generators to spit out boilerplate code
   * You can even create your own generators
-  * Worth mentioning, you don't need them, they're just for convenience
+  * It's worth mentioning, you don't need to use them, they're just there for your convenience
 * We'll run the model generator, specifying the model will be called `TaskGroup`
-* We can add more arguments using this `property_name:type` format to save us some typing
+* We can also use this `property_name:type` format to specify the columns save us some typing
   * So here we have one property called `title` that will be a `string`
   * There's a bunch of types you can use, however you're slightly limited by the database you're using
 * I also added the flag `--skip-fixture`
-  * Fixtures are basically YAML representation of your database, that get loaded to the test database to reduce the amount of test setup
-  * In theory this is good, but in practice fixtures get messy really fast
-    * I'll be showing a better alternative later on
-<!-- TODO: make a slide for this -->
-* After running this command a few files will be created.
-* A database migration to create the table
-* The ruby class for the model
-* A test file for the class
+  * Fixtures are basically YAML files of test data that get loaded before your tests run
+  * The goal is to reduce the amount of setup your tests do, but in practice they get messy really fast
+  * I'll be showing a better alternative later on
+* This is the output of that command
+  * A database migration to create the table
+  * The ruby class for the model
+  * And then a test file for the class
 
 ---
 
 ## Requiring Title in the Database
 
 Note:
-* We're going to make a small change to what this generated so that the `title` property is required
+* We're gonna make a change to what was generated because we want to say that `title` is required
 
 
 ```rb [|6]
@@ -471,14 +491,15 @@ end
 ```
 
 Note:
-* First we're going to open the migration file, and say the `title` column has a `null: false` constraint
+* First we're going to open the migration file
+* Then we're going to add the `null: false` constraint to the `title` column
 
 ---
 
 ## Requiring Title in the Ruby Class
 
 Note:
-* Next we're going to do the same thing, but in the Ruby class instead of the database
+* Next we're going to do pretty much the same thing, but in the Ruby class
 
 
 ```rb [|4]
@@ -490,11 +511,18 @@ end
 ```
 
 Note:
-* In the `TaskGroup` class, we add this line that runs the `validates` method, which will make Rails aware that `title` is required
+* In the `TaskGroup` model...
+* ...we'll add this line which adds the presence validation to the `title` attribute
+* There's also a bunch of built in validations we can add
 
 ---
 
 ## Why Require Twice?
+
+Note:
+* You might be wondering why we're adding validation in two places
+* There's actually a few reasons
+
 
 * Database Validation
   * Prevents manual updates from not having a name
@@ -506,10 +534,10 @@ Note:
   * Also checks for empty strings
 
 Note:
-* There's a few reasons why we're saying `title` is required in two places
+* Mainly...
 * The database is able to enforce this more strictly
-* And also gives us an idea of our app just by looking at the data
-* However, doing the validation in Rails can be more performant, since it can potentially save us a useless database call
+  * And also gives us an idea of our app just by looking at the data
+* And doing the validation in Rails can be more performant, since it can potentially save us a useless database call
 * The Rails validation also gives us a better output if it's invalid
   * Both for you as a developer and for the end user
 
@@ -519,10 +547,10 @@ Note:
 rails db:migrate
 ```
 
-<!-- TODO: screenshot the output -->
+![Task group migration output](./assets/output-task-group-migration.svg)
 
 Note:
-* With Postgres running, we can now run the migration
+* With Postgres running in the background, we can now run the migration
 
 ---
 
@@ -530,7 +558,8 @@ Note:
 
 Note:
 * Let's throw together some tests for the model
-* I'm not going to get too deep into testing since that's a big subject, just want to give an overview
+* Testing is a big subject with lots of opinions, so I'm not going to go too deep into it
+* I just want to show you generally what some tests can look like
 
 
 ```rb [|6-9|10-12|14-18]
@@ -573,7 +602,7 @@ rails test
 rails test path/to/file_test.rb
 ```
 
-<!-- TODO: show output -->
+![TaskGroup model tests output](./assets/output-task-group-model-tests.svg)
 
 Note:
 * You can run these with `rails test`
@@ -582,6 +611,10 @@ Note:
 ---
 
 # UI Setup
+
+Note:
+* I'm going to use Bootstrap to add a bit of styles to this project
+* So there's a little bit of base setup we can get out of the way
 
 
 ```erb [5-6]
@@ -595,22 +628,17 @@ Note:
 ```
 
 Note:
-* To help style things, I'm going to add Bootstrap to the project
 * To keep things simple, I'm going to just link to a CDN build
-
-* Rails has a file called `application.html.erb` which is a layout template
-* It will automatically surround our other pages
-* It's possible to have multiple layout templates
-  * One for authorized and one for unauthorized for example
-
-* So we can add these tags to the `head` of that file, and Bootstrap will be around for every page
+* We can add the tags to do so inside the `application.html.erb` layout template
+* The layout template will automatically surround our other, more specific views
+* A Rails app can have multiple layout templates, but we'll just have one
 
 ---
 
 ## Notice Container
 
 Note:
-* While we're in our layout file, let's also setup the page layout and show any notices that come back
+* While we're in our layout file, let's also setup the page layout and make it show any notices that we give
 
 
 ```erb[|4,12|5-9|11]
@@ -631,26 +659,23 @@ Note:
 
 Note:
 * Add a Bootstrap container
-
-* `notice` is a variable that controllers can set that tell the user something
-  * Things like "item saved" or "item deleted"
-* Something to point out is how some tags start with `<%` and some start with `<%=`
-  * They both are for running Ruby code in the template, but when there is a `=` the return value will be added to the page
-
-* `yield` is essentially where the individual templates for controllers will be added to the page
-
-<!-- TODO: after this slide is a good place to remove turbolinks hello world cruft -->
+* Then we'll conditionally show an alert if the `notice` variable is set
+  * `notice` gets set in our controllers and can be used to indicate things to the user, like "item saved" or whatever
+* Down below, we'll add `yield`
+  * This is where the individual templates for controllers will be added to the page
+* You might've noticed that we have some tags with `<%` and some with `<%=>`
+  * Both are ERB tags that run Ruby code, but when we add a `=` we're outputting something to the page
 
 ---
 
-# Creating a Controller <!-- .element: class="r-fit-text" -->
+# Creating a Controller
+<!-- .element: class="r-fit-text" -->
 
 Note:
 * We've got this model, but now we need to actually do something with it
 * That will be the controller's job
+* A controller basically takes user interaction and coordinates what effect that has on your models
 * We could use a generator to scaffold things, but to we're going to do this one manually
-
-<!-- TODO: should I give a sentence for what a controller is? -->
 
 
 ```rb []
@@ -662,10 +687,9 @@ end
 
 Note:
 * Create a file `app/controllers/task_groups_controller.rb`, and corresponding class.
-
 * Note that `TaskGroups` is plural
   * Controllers should have plural names, and models are singular
-* Not every controller needs to correspond to a model, or vice-versa
+* Also, just so you know not every controller needs to correspond to a model, or vice-versa
 
 ---
 
@@ -693,23 +717,17 @@ class TaskGroupsController < ApplicationController
   def set_task_group; end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
-* We'll go through implementing these methods together, but I wanted to mention a few things at a high level
-
+* These are the methods we're going to implement in our controller
+  * I'm going to first talk about them at a high level
 * The `TaskGroupsController` is going to have these methods which correspond to the standard CRUD actions
-  * We can add other ones, and we don't need them all
-
+  * You can also add more or less endpoints than these if you want, these are just the generic ones
 * We're also going to have a couple private methods
-
-* Because there's user input for the params, we're going to want to sanitize them
-
-* Next, we've got a method to set the task group
-
-* At the top of the class, we're using a controller hook to indicate we want the task group to be set before any action, except for the index
-* There's a few hooks around actions that you can use, and you can have as many as you like
-
-* There's a few hooks around actions you can use, and you can have as many as you like
+* Because there's user input for the params, we're going to want to sanitize them, so we'll do that in the `task_group_params` method
+* We also have a method that will set the task group we're working with
+  * At the top of the class, we're using a controller hook to make this method run before our actions, except for the index action since it doesn't have a specific task group it's working with
 
 ---
 
@@ -726,15 +744,9 @@ end
 
 Note:
 * Now we gotta make the endpoints accessible
-* Do that in the `routes.rb` file
-
-* And add this `resources` call with the symbol `:task_groups`
-
-* By saying it's a resource, Rails will automatically know how to map the CRUD actions task groups controller to an endpoint and HTTP method and URL structure
-* If we have uncommon actions, we're able to manually declare them here too
-
-<!-- TODO: show routes that are generated -->
-<!-- TODO: explain create->new & update->edit -->
+* We can do that in the `routes.rb` file
+* In here', we'll run `resources` and pass it the symbol `:task_groups`
+* By saying it's a resource, Rails will automatically know how to map our controller methods to a conventional URL and HTTP methods
 
 
 ```rb [5]
@@ -747,7 +759,7 @@ end
 ```
 
 Note:
-* This isn't needed, but we can also use this `root` method to make the index endpoint go to the task groups index action
+* This isn't needed, but we can also use this `root` function to make the root of the site redirect to the task groups index
 
 ---
 
@@ -769,27 +781,24 @@ end
 ```
 
 Note:
-* Let's first implement the setting of the task group
-* This is a little complicated since we need it to go about doing this in a few ways
-
+* Let's first implement `set_task_group`
+* This is a little complicated since we need to set the task group in a few ways, depending on the context
 * First we'll check for an ID param being set
-  * Generally this will be from the URL (`/task_groups/:id`)
+  * In our case, the param will be set through the URL
 * When we have the ID param, we'll try to find that task group
-  * A cool thing about this is that if one isn't found, Rails will handle making this be a 404 response
-
-* Next, we'll check if we're doing a create action
-* If we are, we're going to make a new task group instance with the params that will be given
+  * And a cool thing about Rails is that if it doesn't find the `TaskGroup`, it'll automatically return a 404 response
+* Next, we'll check if we're in the create action
+  * If we are, we're going to make a new `TaskGroup` instance with the params that've been given
   * Note that this doesn't save the task group, just gives us an instance to work with
-
 * In neither of those scenarios, we create a minimal instance
-* This is mainly so we can pass it around without having `nil` errors in our template
+  * Mainly so we don't have `nil` errors in our templates
 
 ---
 
 ## Task Group Params
 
 Note:
-* Alright, we referenced the `task_group_params` method in the last bit, so let's implement that
+* We referenced the `task_group_params` method in the last bit, so let's implement that
 
 
 ```rb []
@@ -800,6 +809,13 @@ def task_group_params
 end
 ```
 
+Note:
+* Rails comes with a tool called strong parameters
+* It basically lets us define which params we care about and filters out anything else
+* In our case, the only param we want for a task groups is the name
+* Note that we don't want to do much validation of the params here, since validation belongs in the model not the controller
+
+
 ```json
 {
   "task_group": {
@@ -807,7 +823,6 @@ end
   }
 }
 ```
-<!-- .element: class="fragment" -->
 
 ```html
 <input name="task_group[title]" />
@@ -815,19 +830,8 @@ end
 <!-- .element: class="fragment" -->
 
 Note:
-* Rails comes with a thing called strong parameters
-* It basically lets us say specific params for an endpoint will be required or can be optional, and anything that isn't specified will get ignored
-
-* This doesn't need to be done in a separate method
-  * But it helps your controller code be organized and potentially keep from repeating
-* If you need to do any manipulating of params to usable values, this is a good place
-* Note that we don't want to do validation of the params here, those belong in the model, not the controller
-
-* In our case, the only param we're going to want for a task group is the name
-
 * To help visualize this, if the params were passed in through a JSON body, it would look like this
-
-* If you were passing it as form body params (or another way that doesn't have nested values), then it would have the nested keys be wrapped in square brackets
+* If you were passing it as form body params, then it would have the nested keys be wrapped in square brackets
 
 ---
 
@@ -839,7 +843,7 @@ Note:
 
 
 ```rb []
-# app/controllers/tasks_controller.rb
+# app/controllers/task_groups_controller.rb
 
 def index
   @task_groups = TaskGroup.all
@@ -849,25 +853,33 @@ end
 Note:
 * It's pretty simple
 * Just get all of the task groups, and set them to an instance variable
-
 * If we wanted to, we could go more advanced than `all`, and add pagination, or filters, but that's not relevant at this time
 
 
-```erb [|3-7|9-13|6|11]
+```erb [|3-11|13-21|6-10|15-19]
 <!-- app/views/task_groups/index.html.erb -->
 
 <div class="d-flex justify-content-between align-items-center">
   <h1>Task Groups</h1>
 
-  <%= link_to "New task group", new_task_group_path, class: "btn btn-outline-secondary" %>
+  <%= link_to(
+        "New task group",
+        new_task_group_path,
+        class: "btn btn-outline-secondary"
+      ) %>
 </div>
 
 <div class="list-group mt-5">
   <% @task_groups.each do |task_group| %>
-    <%= link_to task_group.title, task_group, class: "list-group-item list-group-item-action" %>
+    <%= link_to(
+          task_group.title,
+          task_group,
+          class: "list-group-item list-group-item-action"
+        ) %>
   <% end %>
 </div>
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * On to the view template
@@ -884,6 +896,12 @@ Note:
 * In the second use, since we're linking to a specific resource, we can just pass in that instance
   * Rails will automatically figure out what the path for that instance is, even including the ID
 
+
+![Task groups index, empty](./assets/task-groups-index-empty.png)
+
+Note:
+* Here's what we've got so far
+
 ---
 
 ## Create Action
@@ -892,12 +910,15 @@ Note:
 * Let's move on to making it possible to create task groups
 
 
-```rb [|4-5, 8|6-8]
+```rb [|4-8, 11|9-11]
 # app/controllers/task_groups_controller.rb
 
 def create
   if @task_group.save
-    redirect_to task_group_url(@task_group), notice: "Task group was successfully created."
+    redirect_to(
+      task_group_url(@task_group),
+      notice: "Task group was successfully created."
+    )
   else
     render :new, status: :unprocessable_entity
   end
@@ -955,6 +976,7 @@ Note:
   </div>
 <% end %>
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * Here is the partial for the task group form
@@ -972,6 +994,18 @@ Note:
 
 * Lastly, at the top of the form, we're making it so if the task group is invalid and fails to save, then the user can actually see why it failed
 
+
+![New task group page](./assets/task-group-new-page.png)
+
+Note:
+* Here's what the form looks like
+
+
+![New task group page with an error](./assets/task-group-new-page-errored.png)
+
+Note:
+* And if there's a validation error
+
 ---
 
 ## Show Action
@@ -987,13 +1021,23 @@ Note:
 <div class="d-flex justify-content-between align-items-center">
   <h1><%= @task_group.title %></h1>
 
-  <%= link_to "Edit task group", edit_task_group_path(@task_group), class: "btn btn-outline-secondary" %>
+  <%= link_to(
+        "Edit task group",
+        edit_task_group_path(@task_group),
+        class: "btn btn-outline-secondary"
+      ) %>
 </div>
 ```
 
 Note:
 * The show view is pretty minimal at the moment
 * Just the title, and a link to the edit page
+
+
+![Task group show page](./assets/task-group-show-page.png)
+
+Note:
+* If we create a task group and clicked into it from the index, this is the page we will see
 
 ---
 
@@ -1003,12 +1047,15 @@ Note:
 * Now that we can create task groups, we should be able to update them
 
 
-```rb [|4-5, 8|6-8]
+```rb [|4-8, 11|9-11]
 # app/controllers/task_groups_controller.rb
 
 def update
   if @task_group.update(task_group_params)
-    redirect_to task_group_url(@task_group), notice: "Task group was successfully updated."
+    redirect_to(
+      task_group_url(@task_group),
+      notice: "Task group was successfully updated."
+    )
   else
     render :edit, status: :unprocessable_entity
   end
@@ -1026,20 +1073,30 @@ Note:
 
 
 ```erb []
-<!-- app/view/task_groups/edit.html.erb -->
+<!-- app/views/task_groups/edit.html.erb -->
 
 <h1>Editing task group</h1>
 
 <%= render "form", task_group: @task_group %>
 
 <div class="mt-3">
-  <%= link_to "Cancel", @task_group, class: "btn btn-outline-secondary" %>
+  <%= link_to(
+        "Cancel",
+        @task_group,
+        class: "btn btn-outline-secondary"
+      ) %>
 </div>
 ```
 
 Note:
 * Because our form is in a partial, the edit view is basically the same as the new view, just switched some text
 * The form helpers are dynamic enough to determine if it should send a `POST` request to the create endpoint, or a `PATCH` request to the update endpoint
+
+
+![Task group edit page](./assets/task-group-edit-page.png)
+
+Note:
+* Here's what this page looks like
 
 ---
 
@@ -1050,12 +1107,15 @@ Note:
 * So let's work on the destroy action
 
 
-```rb [|4|5]
+```rb [|4|5-8]
 # app/controllers/task_groups_controller.rb
 
 def destroy
   @task_group.destroy!
-  redirect_to task_groups_url, notice: "Task group was successfully destroyed."
+  redirect_to(
+    task_groups_url,
+    notice: "Task group was successfully destroyed."
+  )
 end
 ```
 
@@ -1068,7 +1128,7 @@ Note:
 * When that finishes, we'll take the user back to the list of task groups
 
 
-```erb [|6-11]
+```erb [|6-12]
 <!-- app/views/task_groups/edit.html.erb (next to cancel button) -->
 
 <div class="mt-3">
@@ -1078,11 +1138,11 @@ Note:
         "Destroy this task group",
         @task_group,
         method: :delete,
-        class: "btn btn-danger mt-5"
+        class: "btn btn-danger mt-5",
+        data: { turbo_confirm: "Are you sure?" }
       ) %>
 </div>
 ```
-<!-- TODO: add confirmation -->
 
 Note:
 * There isn't necessarily a view for deletion, but a user still needs to be able to access the endpoint
@@ -1091,11 +1151,17 @@ Note:
 * `button_to` is pretty neat, it basically creates a form with hidden inputs and a visible submit button
   * This essentially lets us link to an endpoint that isn't just a `GET` request
 
+
+![Task group edit page with delete button](./assets/task-group-edit-page-with-delete.png)
+
+Note:
+* Here's the edit page with the delete button
+
 ---
 
 ## Trying things out
 
-<!-- TODO: get a video (show that blank names return an error) -->
+<video data-autoplay src="./assets/demo-after-task-group.mov"></video>
 
 Note:
 * Alright, now that we have that code in place, let's see it in action
@@ -1111,7 +1177,7 @@ Note:
 * But I do want to show you generally what they can look like
 
 
-```rb [|20-23|25-35|42-49]
+```rb [|20-23|25-38|45-55]
 # test/controllers/task_groups_controller_test.rb
 
 require "test_helper"
@@ -1140,7 +1206,10 @@ class TaskGroupsControllerTest < ActionDispatch::IntegrationTest
     group_title = "I am a task group"
 
     assert_difference -> { TaskGroup.count }, 1 do
-      post task_groups_url, params: { task_group: { title: group_title } }
+      post(
+        task_groups_url,
+        params: { task_group: { title: group_title } }
+      )
     end
 
     created_task_group = TaskGroup.last
@@ -1157,7 +1226,10 @@ class TaskGroupsControllerTest < ActionDispatch::IntegrationTest
     new_title = "i have changed"
 
     assert_changes -> { @task_group.reload.title }, to: new_title do
-      put task_group_url(@task_group), params: { task_group: { title: new_title } }
+      put(
+        task_group_url(@task_group),
+        params: { task_group: { title: new_title } }
+      )
     end
     assert_redirected_to task_group_url(@task_group)
   end
@@ -1171,6 +1243,7 @@ class TaskGroupsControllerTest < ActionDispatch::IntegrationTest
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * Looking at a test like the one for `new`, we're essentially testing that our template doesn't have errors
@@ -1248,13 +1321,16 @@ class TaskGroupsTest < ApplicationSystemTestCase
 
   test "deleting a task group" do
     visit edit_task_group_url(@task_group)
-    click_button "Destroy this task group"
+    accept_confirm do
+      click_button "Destroy this task group"
+    end
 
     assert_text "Task group was successfully destroyed."
     assert_no_text @task_group.title
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * Anyway, this is what some system tests for task groups could look like
@@ -1272,13 +1348,16 @@ rails test:system
 rails test path/to/test.rb
 ```
 
-<!-- TODO: drop in a video of them running -->
-
 Note:
 * To run the system tests, you need to run either `rails test:system` or `rails test` specifying the path to the tests
-
 * Like the other tests, you don't need to have the Rails server running in the background to run the system tests
-* You can also make these tests run headlessly as well, which makes running them less annoying
+
+
+<video data-autoplay src="./assets/demo-system-tests-running.mov"></video>
+
+Note:
+* Here's what running them looks like by default
+* You can also make these tests run headlessly as well, which makes them less annoying to run
 
 ---
 
@@ -1297,6 +1376,9 @@ rails g model Task \
   task_group:references \
   --no-fixture
 ```
+
+![Generate task group model output](./assets/output-task-model-generation.svg)
+<!-- .element: class="fragment" -->
 
 Note:
 * We're going to have some more fields for tasks
@@ -1336,6 +1418,8 @@ Note:
 ```sh
 rails db:migrate
 ```
+
+![Task migration output](./assets/output-task-migration.svg)
 
 Note:
 * Then run the migration
@@ -1419,10 +1503,10 @@ class TaskTest < ActiveSupport::TestCase
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * This is nearly identical to the task group model tests
-
 * The main difference is in the setup, we're making a new task group that the task can belong to
 
 ---
@@ -1433,7 +1517,7 @@ Note:
 * We need a controller for tasks
 
 
-```rb [|4-5|30-42|]
+```rb [|4-5|39-51|]
 # app/controllers/tasks_controller.rb
 
 class TasksController < ApplicationController
@@ -1442,7 +1526,10 @@ class TasksController < ApplicationController
 
   def create
     if @task.save
-      redirect_to task_group_url(@task_group), notice: "Task was successfully created."
+      redirect_to(
+        task_group_url(@task_group),
+        notice: "Task was successfully created."
+      )
     else
       render :new, status: :unprocessable_entity
     end
@@ -1450,7 +1537,10 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      redirect_to task_group_url(@task_group), notice: "Task was successfully updated."
+      redirect_to(
+        task_group_url(@task_group),
+        notice: "Task was successfully updated."
+      )
     else
       render :edit, status: :unprocessable_entity
     end
@@ -1458,7 +1548,10 @@ class TasksController < ApplicationController
 
   def destroy
     @task.destroy!
-    redirect_to task_group_url(@task_group), notice: "Task was successfully destroyed."
+    redirect_to(
+      task_group_url(@task_group),
+      notice: "Task was successfully destroyed."
+    )
   end
 
   private
@@ -1482,6 +1575,7 @@ class TasksController < ApplicationController
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * The tasks controller is nearly the same as the task groups controller, though there are a couple things to point out
@@ -1554,6 +1648,12 @@ Note:
 Note:
 * On the show task groups page, we're going to add a link to the new task page
 
+
+![Task groups show page with no tasks](./assets/task-group-show-page-no-tasks.png)
+
+Note:
+* The page now looks like this
+
 ---
 
 ## New Task Page
@@ -1605,6 +1705,7 @@ Note:
   </div>
 <% end %>
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 
@@ -1614,6 +1715,12 @@ Note:
   * This is so Rails is able to figure out the URL the form submits to
 
 * Second, we have another field, that's a datetime input
+
+
+![New task page](./assets/task-new-page.png)
+
+Note:
+* Here's the task form
 
 ---
 
@@ -1642,7 +1749,7 @@ Note:
 * Passing an ActiveRecord collection to the `render `funciton will make it automatically list over them and render the partial for that resource
 
 
-```erb [|3-8, 38|6|9-15|18-34|36]
+```erb [|3-8, 38|6|9-15|18-34|36-40]
 <!-- app/views/tasks/_task.html.erb -->
 
 <%= tag.div(
@@ -1678,10 +1785,15 @@ Note:
           ) %>
     <% end %>
 
-    <%= link_to "Edit", edit_task_group_task_path(task_group, task), class: "btn btn-link" %>
+    <%= link_to(
+          "Edit",
+          edit_task_group_task_path(task_group, task),
+          class: "btn btn-link"
+        ) %>
   </div>
 <% end %>
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * In our case, the resource is a task, so we need to make a task partial
@@ -1704,10 +1816,15 @@ Note:
 * We're using `button_to` which, like I mentioned earlier, will create a form on the page
   * This time however, we're adding specific params that will get turned into hidden input elements
   * We're also specifying to use a `PATCH` request so it uses the correct action
-  <!-- TODO: ensure the method is needed -->
 * Because Turbo is in the project, the UX is actually similar to if this were done with JavaScript rather than a page refresh
 
 * Lastly, we're adding a button to link to the edit page
+
+
+![Task group show page with tasks](./assets/task-group-show-page-with-tasks.png)
+
+Note:
+* And now we're able to see tasks in the task group
 
 ---
 
@@ -1722,20 +1839,32 @@ Note:
 <%= render "form", task_group: @task_group, task: @task %>
 
 <div class="mt-3">
-  <%= link_to "Cancel", @task_group, class: "btn btn-outline-secondary" %>
+  <%= link_to(
+      "Cancel",
+      @task_group,
+      class: "btn btn-outline-secondary"
+    ) %>
 
   <%= button_to(
         "Destroy this task",
         [@task_group, @task],
         method: :delete,
-        class: "btn btn-danger mt-5"
+        class: "btn btn-danger mt-5",
+        data: { turbo_confirm: "Are you sure?" }
       ) %>
 </div>
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * Lastly, let's add the edit page
 * It's basically the same as the edit page for task groups
+
+
+![Task edit page](./assets/task-edit-page.png)
+
+Note:
+* It looks like this
 
 ---
 
@@ -1746,7 +1875,7 @@ Note:
 
 
 ```rb []
-# tests/controllers/tasks_controller_test.rb
+# test/controllers/tasks_controller_test.rb
 
 require "test_helper"
 
@@ -1769,7 +1898,10 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
     }
 
     assert_difference -> { @task_group.tasks.count }, 1 do
-      post task_group_tasks_url(@task_group), params: { task: task_params }
+      post(
+        task_group_tasks_url(@task_group),
+        params: { task: task_params }
+      )
     end
     assert_redirected_to task_group_url(@task_group)
 
@@ -1785,7 +1917,10 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
 
   test "should update existing tasks" do
     assert_changes -> { @task.reload.completed }, to: true do
-      patch task_group_task_url(@task_group, @task), params: { task: { completed: true } }
+      patch(
+        task_group_task_url(@task_group, @task),
+        params: { task: { completed: true } }
+      )
     end
     assert_redirected_to task_group_url(@task_group)
   end
@@ -1799,6 +1934,7 @@ class TasksControllerTest < ActionDispatch::IntegrationTest
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * This is nearly identical to the task groups controller tests, so I'm not going to go over them
@@ -1812,7 +1948,7 @@ Note:
 
 
 ```rb []
-# tests/system/tasks_test.rb
+# test/system/tasks_test.rb
 
 require "application_system_test_case"
 
@@ -1888,13 +2024,16 @@ class TasksTest < ApplicationSystemTestCase
 
   test "deleting a task" do
     visit edit_task_group_task_url(@task_group, @task)
+    accept_confirm do
+      click_button "Destroy this task"
+    end
 
-    click_button "Destroy this task"
     assert_text "Task was successfully destroyed."
     assert_no_text @task.title
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * Again, these are nearly the same, so I'm not going to go into detail for these, just want to show they exist
@@ -1947,12 +2086,15 @@ Note:
 * Now let's actually use the scopes we created
 
 
-```erb [8-14]
+```erb [12-18]
 <!-- app/views/task_groups/index.html.erb -->
 
 <div class="list-group mt-5">
   <% @task_groups.each do |task_group| %>
-    <%= link_to task_group, class: "list-group-item list-group-item-action" do %>
+    <%= link_to(
+          task_group,
+          class: "list-group-item list-group-item-action"
+        ) do %>
       <%= task_group.title %>
 
       <span class="badge bg-warning rounded-pill">
@@ -1966,6 +2108,7 @@ Note:
   <% end %>
 </div>
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * Back on the task groups index page, we can add `tasks.incomplete.count` and `tasks.completed.count`
@@ -1992,10 +2135,16 @@ Note:
 # db/seeds.rb
 
 2.times do |task_group_number|
-  task_group = TaskGroup.create!(title: "Task Group #{task_group_number}")
+  task_group = TaskGroup.create!(
+    title: "Task Group #{task_group_number}"
+  )
 
   6.times do |task_number|
-    due_date = task_number.even? ? task_number.months.from_now : nil
+    due_date = if task_number.even?
+                 task_number.months.from_now
+               else
+                 nil
+               end
     completed = (task_number % 3).zero?
 
     task_group.tasks.create!(
@@ -2006,6 +2155,7 @@ Note:
   end
 end
 ```
+<!-- .element: class="r-stretch" -->
 
 Note:
 * Basically, it's just a script that knows about some of your Rails code
@@ -2032,8 +2182,6 @@ Note:
 * There's also libraries that can help you organize and break up seeds
 * If you have a lot of models, you probably don't want them all in one file
 
-<!-- TODO: find out what that one library is -->
-
 ---
 
 # High Level Territory
@@ -2046,14 +2194,14 @@ Note:
 
 ## Factory Bot
 
+https://github.com/thoughtbot/factory_bot
+https://github.com/thoughtbot/factory_bot_rails
+
 Note:
 * The first thing I want to mention is a gem called Factory Bot, it's used to create data for your tests
 * It's a lot more sustainable than creating all the data for a test manually
 * And in my opinion it's significantly easier to reason about than fixtures
 * It can also give a bit more confidence in your tests than fixtures, since it runs model callbacks (which fixtures do not)
-
-<!-- TODO: add link to it -->
-<!-- use factory_bot_rails -->
 
 ---
 
@@ -2066,7 +2214,10 @@ Note:
 ```rb []
 setup do
   task_group = TaskGroup.create!(title: 'i am a group')
-  @task = Task.create!(title: 'i am a task', task_group: task_group)
+  @task = Task.create!(
+    title: 'i am a task',
+    task_group: task_group
+  )
 end
 ```
 
@@ -2132,6 +2283,8 @@ Note:
 
 ## Devise
 
+https://github.com/heartcombo/devise
+
 Note:
 * Devise is a gem to manage authentication of users
 * When you add it, you can either create a user model or attach it to an existing one
@@ -2143,6 +2296,8 @@ Note:
 ---
 
 ## Pundit
+
+https://github.com/varvet/pundit
 
 Note:
 * For authorization, there's a few popular libraries, but I recommend Pundit
@@ -2156,6 +2311,7 @@ Note:
 
 Note:
 * Let's take a look a policy in Pundit
+
 
 ```rb []
 class TaskGroupsController < ApplicationController
@@ -2186,6 +2342,7 @@ Note:
 Note:
 * Now let's see what a Pundit scope might look like
 
+
 ```rb []
 class TaskGroupsController < ApplicationController
   def index
@@ -2198,8 +2355,7 @@ end
 class TaskGroupPolicy < ApplicationPolicy
   # ...
 
-  # TODO: double check this is correct
-  class Scope
+  class Scope < Scope
     def resolve
       scope.where(user: current_user)
     end
@@ -2217,15 +2373,14 @@ Note:
 ## Keep Learning
 
 https://guides.rubyonrails.org
-
-<!-- TODO: confreaks youtube for railsconf talks -->
+https://www.youtube.com/Confreaks
 
 Note:
 * If you want to keep learning about Rails, the Rails guides are a really good resource that go into depth without being straight API docs
 
 ---
 
-## Name Dropping Gems
+## More Useful Gems
 
 * Rubocop (linting)
 * RSpec (testing framework)
@@ -2233,15 +2388,13 @@ Note:
 * Kaminari (pagination)
 * Strong Migrations (catch unsafe migrations)
 * Pry (debug tool)
+* Seedbank (organize seeds)
 
 ---
 
-# We Made It
+# We Made It!
 
-<!-- TODO: get a link to the repo -->
-<!-- TODO: link to long form article article -->
-<!-- TODO: confetti gif -->
-<!-- TODO: get lines of code added and removed since init -->
+https://github.com/tegandbiscuits/lets-learn-rails-talk
 
 Note:
 * We've made it to the end!
@@ -2249,12 +2402,6 @@ Note:
 
 # Thank You!
 
-<!-- TODO: add rubocop to make sure not doing anything bad apart from frozen_string_literal missing -->
 <!-- TODO: ensure all TODO items are resolved -->
-<!-- TODO: ensure all code blocks have line numbers -->
-<!-- TODO: need a back button from single group to all groups -->
-<!-- TODO: ensure all html blocks are actually erb -->
 <!-- TODO: ensure all comments are resolved or todo -->
-<!-- TODO: ensure all code has line numbers -->
-<!-- TODO: ensure all solo codeblocks with scrolls have r-stretch class -->
 <!-- TODO: add a high level table of contents -->
