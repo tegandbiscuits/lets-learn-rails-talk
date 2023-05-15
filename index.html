@@ -6,7 +6,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rails Talk</title>
 
-  <script type="module" src="./index.js"></script>
+  <script type="module">
+    import Reveal from './node_modules/reveal.js/dist/reveal.esm.js';
+    import Markdown from './node_modules/reveal.js/plugin/markdown/markdown.esm.js';
+    import Notes from './node_modules/reveal.js/plugin/notes/notes.esm.js';
+    import Highlight from './node_modules/reveal.js/plugin/highlight/highlight.esm.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const deck = new Reveal({
+        plugins: [
+          Markdown,
+          Notes,
+          Highlight,
+        ],
+        progress: false,
+        navigationMode: 'linear',
+        hash: true,
+      });
+
+      deck.initialize();
+    });
+  </script>
+
   <link rel="stylesheet" href="./node_modules/reveal.js/dist/reveal.css">
   <link rel="stylesheet" href="./node_modules/reveal.js/dist/theme/blood.css">
 
@@ -26,7 +47,7 @@
 <body>
   <div class="reveal">
     <div class="slides">
-      <section data-markdown="./use-rails.md" data-separator-vertical="^\n\n">
+      <section data-markdown="./lets-learn-rails.md" data-separator-vertical="^\n\n">
       </section>
     </div>
   </div>
