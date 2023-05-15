@@ -1,0 +1,28 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h1>Task Groups</h1>
+
+  <%= link_to(
+        "New task group",
+        new_task_group_path,
+        class: "btn btn-outline-secondary"
+      ) %>
+</div>
+
+<div class="list-group mt-5">
+  <% @task_groups.each do |task_group| %>
+    <%= link_to(
+          task_group,
+          class: "list-group-item list-group-item-action"
+        ) do %>
+      <%= task_group.title %>
+
+      <span class="badge bg-warning rounded-pill">
+        <%= task_group.tasks.incomplete.count %> incomplete
+      </span>
+
+      <span class="badge bg-success rounded-pill">
+        <%= task_group.tasks.completed.count %> complete
+      </span>
+    <% end %>
+  <% end %>
+</div>

@@ -1,0 +1,19 @@
+<div class="d-flex justify-content-between align-items-center">
+  <h1><%= @task_group.title %></h1>
+
+  <%= link_to(
+        "Edit task group",
+        edit_task_group_path(@task_group),
+        class: "btn btn-outline-secondary"
+      ) %>
+</div>
+
+<div class="mt-5">
+  <div class="mb-3">
+    <%= link_to "New task", new_task_group_task_path(@task_group), class: "btn btn-primary" %>
+  </div>
+
+  <div class="list-group">
+    <%= render @task_group.tasks, task_group: @task_group %>
+  </div>
+</div>

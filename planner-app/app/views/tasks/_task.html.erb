@@ -1,0 +1,40 @@
+<%= tag.div(
+  class: class_names(
+    "list-group-item d-flex justify-content-between align-items-center",
+    "list-group-item-success": task.completed
+  )
+) do %>
+  <div>
+    <h2><%= task.title %></h2>
+
+    <% if task.due_at %>
+      <p class="text-muted"><%= task.due_at %></p>
+    <% end %>
+  </div>
+
+  <div class="d-flex">
+    <% if task.completed %>
+      <%= button_to(
+            "Incomplete",
+            [task_group, task],
+            method: :patch,
+            class: "btn btn-outline-secondary",
+            params: { task: { completed: false } }
+          ) %>
+    <% else %>
+      <%= button_to(
+            "Complete",
+            [task_group, task],
+            method: :patch,
+            class: "btn btn-outline-success",
+            params: { task: { completed: true } }
+          ) %>
+    <% end %>
+
+    <%= link_to(
+          "Edit",
+          edit_task_group_task_path(task_group, task),
+          class: "btn btn-link"
+        ) %>
+  </div>
+<% end %>
